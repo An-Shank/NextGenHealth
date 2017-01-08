@@ -1,0 +1,10 @@
+{% if reports %}
+    <h2>PATIENTS</h2>
+    <ul>
+        {% for r in reports %}
+        <li><a href = "/doctor/{{ r.patient_no }}/">{{ r.patient_no }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2>No Reports to display</h2>
+{%endif%}

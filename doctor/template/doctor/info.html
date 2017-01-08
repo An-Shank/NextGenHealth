@@ -1,0 +1,28 @@
+<h2>PATIENT REPORT</h2>
+<h3>Patient ID : {{patient_id}}</h3>
+<table style="width:100%">
+    <tr>
+        <th>Date</th>
+        <th>Medicine</th>
+        <th>Notes</th>
+        <th>Doctor</th>
+    </tr>
+    {% for r in reports %}
+        {% if patient_id == r.patient_no|slugify %}
+            <tr>
+                <th>{{r.date}}</th>
+                <th>
+                {% for m in r.medsplit %}
+                    {% for i in mreports %}
+                        {% if m|slugify == i.medname|slugify %}
+                        <p><a href="../med/{{i.med_no}}/">{{med_id}}{{m}}</a></p>
+                        {%endif%}
+                    {%endfor%}
+                {%endfor%}
+                </th>
+                <th>{{r.notes}}</th>
+                <th>{{r.doc}}</th>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
