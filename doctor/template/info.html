@@ -15,7 +15,7 @@
                 {% for m in r.medsplit %}
                     {% for i in mreports %}
                         {% if m|slugify == i.medname|slugify %}
-                        <p><a href="../med/{{i.med_no}}/">{{med_id}}{{m}}</a></p>
+                        <p><a href="../med/{{i.med_no}}/">{{m}}</a></p>
                         {%endif%}
                     {%endfor%}
                 {%endfor%}

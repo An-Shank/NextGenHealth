@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 class Report(models.Model) :
@@ -15,6 +14,9 @@ class Report(models.Model) :
 
     def __str__(self) :
         return self.date
+
+    def save(self , *args , **kwargs) :
+        super(Report , self().save(*args , **kwargs))
 
 class MedReport(models.Model) :
     med_no = models.BigIntegerField(primary_key=True)
