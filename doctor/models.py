@@ -26,3 +26,15 @@ class MedReport(models.Model) :
 
     def __str__(self) :
         return self.medname
+
+class PatientDB(models.Model) :
+    p_id = models.BigIntegerField(primary_key=True)
+    p_image = models.ImageField()
+    p_name = models.CharField(max_length = 50)
+    p_age = models.IntegerField(null=False)
+    p_sx = models.CharField(max_length = 10)
+    p_addr = models.CharField(max_length = 100)
+    p_NoK = models.CharField(max_length = 50 , default = "Nil")
+    p_blood = models.CharField(max_length = 3)
+    p_contact = models.CharField(max_length = 50)
+    p_allerg = models.CharField(max_length = 100 , default = "Nil")

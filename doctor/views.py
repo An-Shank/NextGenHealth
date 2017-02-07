@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse , Http404 , HttpResponseRedirect
-from .models import Report , MedReport
+from .models import Report , MedReport , PatientDB
 from django.template import loader , RequestContext
 from django.views import View
 from .forms import SubmitPID
@@ -25,29 +25,37 @@ class IDView(View) :
         form = SubmitPID(request.POST)
         report = Report.objects.all()
         mreport = MedReport.objects.all()
-        template = loader.get_template('doc_form.html')
+        # template = loader.get_template('doc_form.html')
+        template = 'doc_form.html'
         context = {'form' : form , 'title' : "Patient Report"}
         if form.is_valid() :
             out = form.cleaned_data['pid']
-            reports = Report.objects.all()
-            valid = False
-            for r in reports :
-                if r.patient_no == out :
-                    valid = True
-                    break
-            if valid == False :
-                raise forms.ValidationError("This ID does not exist")
-            for r in report :
-                print (r.date)
-        #    return render(request , 'info.html' , {'patient_id' : out , 'reports' : report , 'mreports' : mreport})
-        return HttpResponseRedirect(reverse('info' , args=[out]))
-        return HttpResponse(template.render(context , request))
+            # print("Working in views")
+            # out = form.cleaned_data['pid']
+        #     reports = Report.objects.all()
+        #     valid = False
+        #     for r in reports :
+        #         if r.patient_no == out :
+        #             valid = True
+        #             break
+        #     if valid == False :
+        #          raise forms.ValidationError("This ID does not exist")
+        #         # SubmitPID.validate_pid(self , request , out)
+        #         # SubmitPID.clean_pid(self , request)
+        #     # for r in report :
+        #     #     print (r.date)
+        # #    return render(request , 'info.html' , {'patient_id' : out , 'reports' : report , 'mreports' : mreport})
+            return HttpResponseRedirect(reverse('info' , args=[out]))
+        # return HttpResponse(template.render(context , request))
+        # return HttpResponseRedirect('.')
+        return render(request , template , context)
 
 def info(request , patient_id) :
     reports = Report.objects.all()
     mreports = MedReport.objects.all()
+    p_info = PatientDB.objects.all()
     template = loader.get_template('info.html')
-    context = {'reports' : reports , 'patient_id' : patient_id , 'mreports' : mreports }
+    context = {'reports' : reports , 'patient_id' : patient_id , 'mreports' : mreports , 'p_info' : p_info}
     try:
         pid = Report.objects.get(pk=patient_id)
     except Report.DoesNotExist:
