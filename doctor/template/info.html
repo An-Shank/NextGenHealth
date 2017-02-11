@@ -1,49 +1,60 @@
-<div style="width : 70% ; float : right ">
-    <h2>PATIENT REPORT</h2>
-    <h3>Patient ID : {{patient_id}}</h3>
-    <table style="width : 100% ">
-        <tr>
-            <th>Date</th>
-            <th>Medicine</th>
-            <th>Notes</th>
-            <th>Doctor</th>
-        </tr>
-        {% for r in reports %}
-            {% if patient_id == r.patient_no|slugify %}
-                <tr>
-                    <th>{{r.date}}</th>
-                    <th>
-                    {% for m in r.medsplit %}
-                        {% for i in mreports %}
-                            {% if m|slugify == i.medname|slugify %}
-                            <p><a href="../med/{{i.med_no}}/">{{m}}</a></p>
-                            {%endif%}
-                        {%endfor%}
-                    {%endfor%}
-                    </th>
-                    <th>{{r.notes}}</th>
-                    <th>{{r.doc}}</th>
-                </tr>
-            {% endif %}
-        {% endfor %}
-    </table>
-</div>
-<div style="width : 30% ;float: left">
-    <h2>PATIENT INFO</h2>
-    {% for p in p_info %}
-    {% if p.p_id|slugify == patient_id %}
-        <p><strong>
-            {{p.image}}
-            Patient ID : {{patient_id}} <br>
-            Name : {{p.p_name}} <br>
-            Age : {{p.p_age}} <br>
-            Sex : {{p.p_sx}} <br>
-            Address : {{p.p_addr}} <br>
-            Next of Kin : {{p.p_NoK}} <br>
-            Blood Group : {{p.p_blood}} <br>
-            Contact No : {{p.p_contact}} <br>
-            Allergies : {{p.p_allerg}} <br>
-        </strong></p>
-    {%endif%}
-    {%endfor%}
-</div>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <div class="container">
+        <div style="width : 70% ; float : right ">
+            <h2>PATIENT REPORT</h2>
+            <h3>Patient ID : {{patient_id}}</h3>
+            <table class="Table" style="width : 100%">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Medicine</th>
+                        <th>Notes</th>
+                        <th>Doctor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reports %}
+                        {% if patient_id == r.patient_no.p_id|slugify %}
+                            <tr>
+                                <th>{{r.date}}</th>
+                                <th>
+                                {% for m in r.medsplit %}
+                                    {% for i in mreports %}
+                                        {% if m|slugify == i.medname|slugify %}
+                                        <p><a href="../med/med_id={{i.med_no}}/">{{m}}</a></p>
+                                        {%endif%}
+                                    {%endfor%}
+                                {%endfor%}
+                                </th>
+                                <th>{{r.notes}}</th>
+                                <th>{{r.doc}}</th>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="condensed">
+        <div style="width : 100% ;float: left">
+            <h2>PATIENT INFO</h2>
+            {% for p in p_info %}
+            {% if p.p_id|slugify == patient_id %}
+                <p><strong>
+                    <img src="/static/images/{{p.p_image}}" alt="{{p.p_image}}" height="50" width="50"/><br>
+                    Patient ID : {{patient_id}} <br>
+                    Name : {{p.p_name}} <br>
+                    Age : {{p.p_age}} <br>
+                    Sex : {{p.p_sx}} <br>
+                    Address : {{p.p_addr}} <br>
+                    Next of Kin : {{p.p_NoK}} <br>
+                    Blood Group : {{p.p_blood}} <br>
+                    Contact No : {{p.p_contact}} <br>
+                    Allergies : {{p.p_allerg}} <br>
+                </strong></p>
+            {%endif%}
+            {%endfor%}
+        </div>
+    </div>
+</head>

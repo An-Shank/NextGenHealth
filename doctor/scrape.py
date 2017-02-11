@@ -24,7 +24,7 @@ class MedSpider(Spider):
                 item = MedItem()
                 medname = []
                 count = 1
-                while count <= 1 :
+                while True :
                         m = select.xpath("//*[@id='scrollbar1']/div[2]/div/ul/li[" + str(count) + "]/a/text()").extract()
                         murl = select.xpath("//*[@id='scrollbar1']/div[2]/div/ul/li[" + str(count) + "]/a/@href").extract()
                         if m :
@@ -42,7 +42,7 @@ class MedSpider(Spider):
                 gen_name = select.xpath("//*[@id='ContentPlaceHolder1_lblGenericName']/text()").extract()
                 detail = select.xpath("//*[@id='ContentPlaceHolder1_tbUses']/text()").extract()
                 seffect = select.xpath("//*[@id='ContentPlaceHolder1_tbSideEffects']/text()").extract()
-                item['Name'] = [g.strip() for g in gen_name]
+                item['Name'] = [g.replace("\n" , " ") for g in gen_name]
                 item['Desc'] = [d.replace("\n" , " ") for d in detail]
                 item['Effects'] = [s.replace("\n" , " ") for s in seffect]
                 return item
