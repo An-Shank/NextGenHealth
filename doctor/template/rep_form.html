@@ -7,7 +7,6 @@
       <h1>{{title}}</h1>
       <form action="." method="POST">
           {% csrf_token %}
-          <!--<input name="pid" type="text" placeholder="patient id"/>-->
           {{form.as_p}}
           <input class="btn btn-primary" type="submit" value="Save">
       </form>

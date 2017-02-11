@@ -28,8 +28,6 @@ class IDView(View) :
         doc_id = kwargs['doc_id']
         if form.is_valid() :
             out = form.cleaned_data['pid']
-            # print("Working in views")
-            # out = form.cleaned_data['pid']
         #     reports = Report.objects.all()
         #     valid = False
         #     for r in reports :
@@ -52,7 +50,6 @@ class IDView(View) :
 class DocView(View) :
     def get(self , request , *args , **kwargs) :
         the_form = DocLogin()
-        #reports = Report.objects.all()
         template = loader.get_template('doc_user.html')
         context = {'form' : the_form , 'title' : "Doctor Login"}
         return HttpResponse(template.render(context , request))
