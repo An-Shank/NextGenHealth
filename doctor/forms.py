@@ -20,30 +20,6 @@ class SubmitPID(forms.Form) :
         if valid == False :
             raise forms.ValidationError('This ID does not exist')
 
-    # def clean_pid(self, request) :
-    #     out = self.cleaned_data['pid']
-    #     reports = Report.objects.all()
-    #     valid = False
-    #     for r in reports :
-    #         if r.patient_no == out :
-    #             valid = True
-    #             break
-    #     if valid == False :
-    #         raise forms.ValidationError("This ID does not exist")
-    #     return out
-    #
-    # def validate_pid(self , request , out) :
-    #     # out = self.cleaned_data['pid']
-    #     reports = Report.objects.all()
-    #     valid = False
-    #     for r in reports :
-    #         if r.patient_no == out :
-    #             valid = True
-    #             break
-    #     if valid == False :
-    #         print("Working")
-    #         raise forms.ValidationError("This ID does not exist")
-    #     return out
 class DocLogin(forms.Form) :
     did = forms.IntegerField(label = 'Doctor ID')
     password = forms.CharField(label = 'Password' , max_length = 50 , widget = forms.PasswordInput)
@@ -65,3 +41,11 @@ class DocLogin(forms.Form) :
             raise forms.ValidationError('This ID does not exist')
         elif authorize == False :
             raise forms.ValidationError('Incorrect Password')
+
+class AddReport(forms.Form) :
+    premeds = forms.CharField(label = 'Meds')
+    notes = forms.CharField(label = 'Notes')
+    def clean(self) :
+        cleaned_data = super(AddReport , self).clean()
+        out_med = cleaned_data['premeds']
+        out_note = cleaned_data['notes']

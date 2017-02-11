@@ -3,7 +3,7 @@ from django.http import HttpResponse , Http404 , HttpResponseRedirect
 from .models import Report , MedReport , Patient , Doctor
 from django.template import loader , RequestContext
 from django.views import View
-from .forms import SubmitPID , DocLogin
+from .forms import SubmitPID , DocLogin , AddReport
 from django import forms
 from django.urls import reverse
 
@@ -16,7 +16,6 @@ from django.urls import reverse
 class IDView(View) :
     def get(self , request , *args , **kwargs) :
         the_form = SubmitPID()
-        #reports = Report.objects.all()
         template = loader.get_template('doc_form.html')
         context = {'form' : the_form , 'title' : "Patient Report"}
         return HttpResponse(template.render(context , request))
@@ -25,9 +24,7 @@ class IDView(View) :
         form = SubmitPID(request.POST)
         report = Report.objects.all()
         mreport = MedReport.objects.all()
-        # template = loader.get_template('doc_form.html')
         template = 'doc_form.html'
-        context = {'form' : form , 'title' : "Patient Report"}
         doc_id = kwargs['doc_id']
         if form.is_valid() :
             out = form.cleaned_data['pid']
@@ -49,6 +46,7 @@ class IDView(View) :
             return HttpResponseRedirect(reverse('patient_info' , kwargs={'patient_id' : out , 'doc_id' : doc_id}))
         # return HttpResponse(template.render(context , request))
         # return HttpResponseRedirect('.')
+        context = {'form' : form , 'title' : "Patient Report"}
         return render(request , template , context)
 
 class DocView(View) :
@@ -63,10 +61,10 @@ class DocView(View) :
         form = DocLogin(request.POST)
         docs = Doctor.objects.all()
         template = 'doc_user.html'
-        context = {'form' : form , 'title' : "Doctor Login"}
         if form.is_valid() :
             out = form.cleaned_data['did']
             return HttpResponseRedirect(reverse('patient_index' , args=[out]))
+        context = {'form' : form , 'title' : "Doctor Login"}
         return render(request , template , context)
 
 def info(request , patient_id , **kwargs) :
@@ -90,3 +88,34 @@ def med_info(request , med_id , **kwargs) :
     except MedReport.DoesNotExist:
        raise Http404("Medicine record does not exist in the database")
     return HttpResponse(template.render(context , request))
+
+class RepView(View) :
+    def get(self , request , *args , **kwargs) :
+        the_form = AddReport()
+        template = loader.get_template('rep_form.html')
+        context = {'form' : the_form , 'title' : "Add Report"}
+        return HttpResponse(template.render(context , request))
+
+    def post(self , request , *args , **kwargs) :
+        form = AddReport(request.POST)
+        docs = Doctor.objects.all()
+        p_id = ord(kwargs['patient_id']) - 48
+        d_id = ord(kwargs['doc_id']) - 48
+        d_name = ""
+        for d in docs :
+            if d_id == d.doc_id :
+                d_name = d.doc_name
+        p = Patient.objects.get(pk=p_id)
+        template = 'rep_form.html'
+        if form.is_valid() :
+            out_med = form.cleaned_data['premeds']
+            out_note = form.cleaned_data['notes']
+            r = Report()
+            r.med = out_med
+            r.patient_no = p
+            r.notes = out_note
+            r.doc = d_name
+            r.save()
+            return HttpResponseRedirect(reverse('patient_info' , kwargs={'patient_id' : p_id , 'doc_id' : d_id}))
+        context = {'form' : form , 'title' : "Doctor Login"}
+        return render(request , template , context)

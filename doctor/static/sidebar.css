@@ -1,0 +1,36 @@
+#sidebar-wrapper
+{
+  z-index: 0;
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  background: #000000;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #c0c0c0;
+  opacity: 0.9;
+}
+#displayed
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.sidebar-nav
+{
+  padding: 0;
+  list-style: none;
+}
+
+#report-table
+{
+  width: 100%;
+  text-align: center;
+  padding-left: 20%;
+  overflow: hidden;
+}
+#add-button
+{
+  float: right;
+}
