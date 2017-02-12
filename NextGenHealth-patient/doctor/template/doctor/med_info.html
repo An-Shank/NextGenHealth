@@ -1,0 +1,9 @@
+<h2>MEDICINE DETAILS</h2>
+<h3>Medicine ID : {{med_id}}</h3>
+{% for m in mreports %}
+    {% if med_id == m.med_no|slugify %}
+        <h3>Generic Name : {{m.medname}}</h3>
+        <h4>Description : {{m.details}}</h4>
+        <h4>Side Effect : {{m.side_effect}}</h4>
+    {% endif %}
+{% endfor %}
