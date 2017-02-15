@@ -4,7 +4,7 @@ from time import strftime
 
 class Doctor(models.Model) :
     doc_id = models.BigIntegerField(primary_key=True)
-    doc_image = models.ImageField()
+    doc_image = models.ImageField(upload_to = 'images/doctors')
     doc_name = models.CharField(max_length = 50)
     doc_sx = models.CharField(max_length = 10)
     doc_addr = models.CharField(max_length = 100)
@@ -15,7 +15,7 @@ class Doctor(models.Model) :
 
 class Patient(models.Model) :
     p_id = models.BigIntegerField(primary_key=True)
-    p_image = models.ImageField()
+    p_image = models.ImageField(upload_to = 'images/patients')
     p_name = models.CharField(max_length = 50)
     p_age = models.IntegerField(null=False)
     p_sx = models.CharField(max_length = 10)

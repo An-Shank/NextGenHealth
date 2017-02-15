@@ -11,6 +11,7 @@ class MedItem(Item):
         Desc = Field()
         Effects = Field()
 
+visit_urls = []
 class MedSpider(Spider):
         name = 'crawl'
         allowed_domain = ["medsplan.com"]
@@ -24,17 +25,19 @@ class MedSpider(Spider):
                 item = MedItem()
                 medname = []
                 count = 1
-                while True :
-                        m = select.xpath("//*[@id='scrollbar1']/div[2]/div/ul/li[" + str(count) + "]/a/text()").extract()
-                        murl = select.xpath("//*[@id='scrollbar1']/div[2]/div/ul/li[" + str(count) + "]/a/@href").extract()
-                        if m :
-                                medname.append(m[0])
-                        else :
-                                break
-                        req = Request(MedSpider.base_url + str(murl[0]) , self.parse_next)
-                        count += 1
-                        item = req
-                        yield item
+                if response.url not in visit_urls :
+                    while count < 5 :
+                            m = select.xpath("//*[@id='scrollbar1']/div[2]/div/ul/li[" + str(count) + "]/a/text()").extract()
+                            murl = select.xpath("//*[@id='scrollbar1']/div[2]/div/ul/li[" + str(count) + "]/a/@href").extract()
+                            if m :
+                                    medname.append(m[0])
+                            else :
+                                    break
+                            visit_urls.append(response.url)
+                            req = Request(MedSpider.base_url + str(murl[0]) , self.parse_next)
+                            count += 1
+                            item = req
+                            yield item
 
         def parse_next(self , response) :
                 select = Selector(response)
@@ -42,9 +45,12 @@ class MedSpider(Spider):
                 gen_name = select.xpath("//*[@id='ContentPlaceHolder1_lblGenericName']/text()").extract()
                 detail = select.xpath("//*[@id='ContentPlaceHolder1_tbUses']/text()").extract()
                 seffect = select.xpath("//*[@id='ContentPlaceHolder1_tbSideEffects']/text()").extract()
-                item['Name'] = [g.replace("\n" , " ") for g in gen_name]
-                item['Desc'] = [d.replace("\n" , " ") for d in detail]
-                item['Effects'] = [s.replace("\n" , " ") for s in seffect]
+                iname = set([g.replace("\n" , " ").strip() for g in gen_name])
+                item['Name'] = list(iname)
+                idesc = [d.replace("\n" , " ").strip() for d in detail]
+                item['Desc'] = list(idesc)
+                ieffect = [s.replace("\n" , " ").strip() for s in seffect]
+                item['Effects'] = list(ieffect)
                 return item
 
 def main() :

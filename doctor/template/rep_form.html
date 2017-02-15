@@ -5,10 +5,12 @@
   <div class="container-fluid">
     <div style="text-align:center; width:100%">
       <h1>{{title}}</h1>
-      <form action="." method="POST">
+      <form class="inline" action="." method="POST">
+        <div class="form-group">
           {% csrf_token %}
           {{form.as_p}}
           <input class="btn btn-primary" type="submit" value="Save">
+        </div>
       </form>
     </div>
   </div>

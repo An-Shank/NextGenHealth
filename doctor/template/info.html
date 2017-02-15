@@ -7,7 +7,7 @@
             {% for p in p_info %}
             {% if p.p_id|slugify == patient_id %}
               <ul class="sidebar-nav">
-                <li><img src="/static/images/{{p.p_image}}" alt="{{p.p_image}}" class="img-circle img-responsive" height="100" width="100" align="middle" id="displayed"/></li>
+                <li><img src="/../media/{{p.p_image}}" alt="{{p.p_image}}" class="img-circle img-responsive" height="100" width="100" align="middle" id="displayed"/></li>
                 <li>Patient ID : {{patient_id}} <li>
                 <li>Name : {{p.p_name}} </li>
                 <li>Age : {{p.p_age}} </li>
@@ -25,7 +25,7 @@
         <div class="container-fluid" id="report-table">
             <h2>Patient Report</h2>
             <div style="text-align:right;">
-              <a href="./add_report/" class="btn btn-success" id="add-button">Add Report</a>
+              <a href="./add_report/" class="btn btn-success" id="add-button">Add Report <span class="glyphicon glyphicon-plus"></span></a>
             </div>
             <table class="table table-striped">
                 <thead>

@@ -2,14 +2,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-  <div class="container-fluid">
-    <div style="text-align:center; width:100%">
+  <div class="container">
+    <div style="text-align:center;">
       <h1>{{title}}</h1>
-      <form action="." method="POST">
-          {% csrf_token %}
-          {{form.as_p}}
-          <input class="btn btn-primary" type="submit" value="Submit">
-      </form>
+        <form action="." method="POST">  {% csrf_token %}
+          <div class="input-group form-group {% if form.non_field_errors %}has-error{% endif %}">
+            <span class="input-group-addon">ID</span>
+            {{form.pid}}
+          </div>
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
     </div>
-  </div>
+  </div>G
 </body>

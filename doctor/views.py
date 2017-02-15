@@ -24,10 +24,14 @@ class IDView(View) :
         form = SubmitPID(request.POST)
         report = Report.objects.all()
         mreport = MedReport.objects.all()
+        patients = Patient.objects.all()
         template = 'doc_form.html'
+        context = {'form' : form , 'title' : "Patient Report"}
         doc_id = kwargs['doc_id']
         if form.is_valid() :
             out = form.cleaned_data['pid']
+            for p in patients :
+                if p.p_id == out :
         #     reports = Report.objects.all()
         #     valid = False
         #     for r in reports :
@@ -41,10 +45,9 @@ class IDView(View) :
         #     # for r in report :
         #     #     print (r.date)
         # #    return render(request , 'info.html' , {'patient_id' : out , 'reports' : report , 'mreports' : mreport})
-            return HttpResponseRedirect(reverse('patient_info' , kwargs={'patient_id' : out , 'doc_id' : doc_id}))
+                    return HttpResponseRedirect(reverse('patient_info' , kwargs={'patient_id' : out , 'doc_id' : doc_id}))
         # return HttpResponse(template.render(context , request))
         # return HttpResponseRedirect('.')
-        context = {'form' : form , 'title' : "Patient Report"}
         return render(request , template , context)
 
 class DocView(View) :
