@@ -22,30 +22,30 @@ class SubmitPID(forms.Form) :
             raise forms.ValidationError('This ID does not exist')
 
 class DocLogin(forms.Form) :
-    did = forms.IntegerField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Doctor ID'}))
+    username = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Username'}))
     password = forms.CharField(label = 'Password' , max_length = 50 , widget = forms.PasswordInput(attrs={'class' : 'form-control' , 'placeholder' : 'Password'}))
 
-    def clean(self) :
-        cleaned_data = super(DocLogin , self).clean()
-        out_id = cleaned_data['did']
-        out_pass = cleaned_data['password']
-        docs = Doctor.objects.all()
-        valid = False
-        authorize = False
-        for d in docs :
-            if d.doc_id == out_id :
-                valid = True
-                if d.doc_pass == out_pass :
-                    authorize = True
-                break
-        if valid == False :
-            raise forms.ValidationError('This ID does not exist')
-        elif authorize == False :
-            raise forms.ValidationError('Incorrect Password')
+    # def clean(self) :
+    #     cleaned_data = super(DocLogin , self).clean()
+    #     out_id = cleaned_data['did']
+    #     out_pass = cleaned_data['password']
+    #     docs = Doctor.objects.all()
+    #     valid = False
+    #     authorize = False
+    #     for d in docs :
+    #         if d.doc_id == out_id :
+    #             valid = True
+    #             if d.doc_pass == out_pass :
+    #                 authorize = True
+    #             break
+    #     if valid == False :
+    #         raise forms.ValidationError('This ID does not exist')
+    #     elif authorize == False :
+    #         raise forms.ValidationError('Incorrect Password')
 
 class AddReport(forms.Form) :
-    premeds = forms.CharField(label = 'Meds')
-    notes = forms.CharField(label = 'Notes')
+    premeds = forms.CharField(label = 'Meds' , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Presciptions'}))
+    notes = forms.CharField(label = 'Notes' , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Notes'}))
     def clean(self) :
         cleaned_data = super(AddReport , self).clean()
         out_med = cleaned_data['premeds']

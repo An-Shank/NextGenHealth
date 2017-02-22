@@ -1,17 +1,29 @@
 from django.db import models
 from time import strftime
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # Create your models here.
 
 class Doctor(models.Model) :
     doc_id = models.BigIntegerField(primary_key=True)
+    user = models.OneToOneField(User , on_delete = models.CASCADE)
     doc_image = models.ImageField(upload_to = 'images/doctors')
     doc_name = models.CharField(max_length = 50)
     doc_sx = models.CharField(max_length = 10)
     doc_addr = models.CharField(max_length = 100)
     doc_phone = models.BigIntegerField()
-    doc_pass = models.CharField(max_length = 50)
     def __str__(self) :
         return self.doc_name
+
+# @receiver(post_save, sender=User)
+# def create_user_doctor(sender, instance, created, **kwargs):
+#     if created:
+#         Doctor.objects.create(user=instance)
+#
+# @receiver(post_save, sender=User)
+# def save_user_doctor(sender, instance, **kwargs):
+#     instance.doctor.save()
 
 class Patient(models.Model) :
     p_id = models.BigIntegerField(primary_key=True)
@@ -48,9 +60,6 @@ class Report(models.Model) :
     def __str__(self) :
         return str(self.date)
 
-    # def save(self , *args , **kwargs) :
-    #     super(Report , self().save(*args , **kwargs))
-
 class MedReport(models.Model) :
     med_no = models.BigIntegerField(primary_key=True)
     medname = models.CharField(max_length = 50)
@@ -59,3 +68,13 @@ class MedReport(models.Model) :
 
     def __str__(self) :
         return self.medname
+
+class Presciption(models.Model) :
+    pat_no = models.ForeignKey(Patient)
+    med_id = models.ForeignKey(MedReport)
+    quantity = models.DecimalField(max_digits = 3 , decimal_places = 2)
+    per_day = models.IntegerField()
+    days = models.IntegerField()
+
+    def __str__(self) :
+        return self.med_id

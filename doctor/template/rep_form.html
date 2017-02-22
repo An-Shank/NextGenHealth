@@ -3,14 +3,18 @@
 </head>
 <body>
   <div class="container-fluid">
-    <div style="text-align:center; width:100%">
-      <h1>{{title}}</h1>
-      <form class="inline" action="." method="POST">
-        <div class="form-group">
-          {% csrf_token %}
-          {{form.as_p}}
+    <div style="text-align:center;">
+      <h1 id="title">{{title}}</h1>
+      <form action="." method="POST">{% csrf_token %}
+          <div class="input-group form-group {% if form.non_field_errors %}has-error{% endif %}">
+            <span class="input-group-addon">Meds</span>
+            {{form.premeds}}
+          </div>
+          <div class="input-group form-group {% if form.non_field_errors %}has-error{% endif %}">
+            <span class="input-group-addon">Notes</span>
+            {{form.notes}}
+          </div>
           <input class="btn btn-primary" type="submit" value="Save">
-        </div>
       </form>
     </div>
   </div>
