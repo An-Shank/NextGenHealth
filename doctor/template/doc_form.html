@@ -1,17 +1,48 @@
+<html>
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- <script type="text/javascript" src="/static/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+            $("body").css("display", "none");
+            $("body").fadeIn(2000);
+    });
+</script> -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">NextGenHealth</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Page 1</a></li>
+        <li><a href="#">Page 2</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% for d in doc %}
+        {% if d.doc_id|slugify == did %}
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{d.doc_name}}</a></li>
+        <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
 </head>
-<body>
+<body style="background:url(/../media/images/background/bg-doc_form.jpg)no-repeat;background-size:100% 100%;">
   <div class="container">
-    <div style="text-align:center;">
-      <h1>{{title}}</h1>
+    <div  class="row" style="text-align:center;">
+      <div class="col-sm-4 col-sm-offset-4" style="margin-top:15% ;">
+        <h1 class="text-center">{{title}}</h1>
         <form action="." method="POST">  {% csrf_token %}
           <div class="input-group form-group {% if form.non_field_errors %}has-error{% endif %}">
-            <span class="input-group-addon">ID</span>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
             {{form.pid}}
           </div>
             <input class="btn btn-primary" type="submit" value="Submit">
         </form>
+      </div>
     </div>
-  </div>G
+  </div>
 </body>
+</html>

@@ -18,7 +18,14 @@ from django.contrib.auth import authenticate , login , logout
 
 def login_user(request) :
     form = DocLogin()
-    logout(request)
+    ds = Doctor.objects.all()
+    if request.user.is_authenticated() :
+        uname = request.user.username
+        for d in ds :
+            if str(d.user) == uname :
+                break
+        out = d.doc_id
+        return HttpResponseRedirect(reverse('patient_index' , args=[out]))
     username = password = ""
     success = 0
     template = 'doc_user.html'
@@ -27,7 +34,6 @@ def login_user(request) :
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username = username , password = password)
-        ds = Doctor.objects.all()
         if user is not None :
             if user.is_active :
                 for d in ds :
@@ -39,18 +45,24 @@ def login_user(request) :
                     out = d.doc_id
                     return HttpResponseRedirect(reverse('patient_index' , args=[out]))
                 else :
-                    return render(request , template , {'message' : 'User not Permitted' , 'form' : form , 'title' : "Doctor Login"})
+                    context.update({'message' : 'User not Permitted'})
             else :
-                return render(request , template , {'message' : 'User is disabled' , 'form' : form , 'title' : "Doctor Login"})
+                context.update({'message' : 'User is disabled'})
         else :
-            return render(request , template , {'message' : 'Invalid User', 'form' : form , 'title' : "Doctor Login"})
+            context.update({'message' : 'Invalid User'})
     return render(request , template , context)
+
+def logout_user(request) :
+    logout(request)
+    form = DocLogin()
+    return render(request , 'doc_user.html' , {'form' : form , 'title' : "Doctor Login" , 'message' : 'User Logged out'})
 
 @login_required(login_url = '/doctor/')
 def patient_view(request , **kwargs) :
     form = SubmitPID()
     template = 'doc_form.html'
-    context = {'form' : form , 'title' : 'Patient Report'}
+    doctor = Doctor.objects.all()
+    context = {'form' : form , 'title' : 'Patient Report' , 'doc' : doctor , 'did' : kwargs['doc_id']}
     if request.POST :
         form = SubmitPID(request.POST)
         report = Report.objects.all()

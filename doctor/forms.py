@@ -27,7 +27,7 @@ class DocLogin(forms.Form) :
 
     # def clean(self) :
     #     cleaned_data = super(DocLogin , self).clean()
-    #     out_id = cleaned_data['did']
+    #     out_id = cleaned_data['username']
     #     out_pass = cleaned_data['password']
     #     docs = Doctor.objects.all()
     #     valid = False
