@@ -8,6 +8,7 @@ from django import forms
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate , login , logout
+# from dal import autocomplete
 
 # Create your views here.
 '''def index(request) :
@@ -15,6 +16,13 @@ from django.contrib.auth import authenticate , login , logout
     template = loader.get_template('doc_form.html')
     context = {'reports' : reports}
     return HttpResponse(template.render(context , request))'''
+
+# class MedicineAutoComplete(autocomplete.Select2QuerySetView) :
+#     def get_queryset(self) :
+#         qs = MedReport.objects.all()
+#         if self.q:
+#             qs = qs.filter(name__istartswith=self.q)
+#         return qs
 
 def login_user(request) :
     form = DocLogin()
@@ -152,7 +160,8 @@ def med_info(request , med_id , **kwargs) :
 def report_view(request , **kwargs) :
     form = AddReport()
     template = 'rep_form.html'
-    context = {'form' : form , 'title' : 'Add Report'}
+    meds = MedReport.objects.all()
+    context = {'form' : form , 'title' : 'Add Report' , 'meds' : meds}
     if request.POST :
         form = AddReport(request.POST)
         docs = Doctor.objects.all()

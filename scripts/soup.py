@@ -21,11 +21,11 @@ def more_info(href) :
     seffect = seffect.lstrip().replace('\n' , ',')
     bname = bname.strip(' ')
     gname = gname.strip(' ')
-    use = use.strip(' ')
+    use = use.lstrip().replace('\n' , ',')
     file = open("list.csv" , "a")
     fieldnames = ['Brand Name' , 'Generic Name' , 'Usage' , 'Side Effects']
     csvfile = csv.DictWriter(file , fieldnames = fieldnames)
-    csvfile.writerow({'Brand Name' : bname.strip(' ') , 'Generic Name' : gname.strip(' ') , 'Usage' : use.strip(' ') , 'Side Effects' : seffect.replace('\n' , ',')})
+    csvfile.writerow({'Brand Name' : bname.strip(' ').encode(encoding = 'UTF-8') , 'Generic Name' : gname.strip(' ').encode(encoding = 'UTF-8') , 'Usage' : use.replace('\n' , ',').encode(encoding = 'UTF-8') , 'Side Effects' : seffect.replace('\n' , ',').encode(encoding = 'UTF-8')})
     file.close()
     print(bname.strip(' '))
 

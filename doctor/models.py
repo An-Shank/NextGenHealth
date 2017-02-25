@@ -63,7 +63,7 @@ class Report(models.Model) :
 class MedReport(models.Model) :
     med_no = models.BigIntegerField(primary_key=True)
     medname = models.CharField(max_length = 50)
-    bname = models.CharField(max_length = 100)
+    # bname = models.CharField(max_length = 100)
     details = models.CharField(max_length = 1000)
     side_effect = models.CharField(max_length = 1000)
 

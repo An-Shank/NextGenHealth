@@ -44,7 +44,7 @@ class DocLogin(forms.Form) :
     #         raise forms.ValidationError('Incorrect Password')
 
 class AddReport(forms.Form) :
-    premeds = forms.CharField(label = 'Meds' , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Presciptions'}))
+    premeds = forms.CharField(label = 'Meds' , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Presciptions' , 'list' : 'medlist'}))
     notes = forms.CharField(label = 'Notes' , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Notes'}))
     def clean(self) :
         cleaned_data = super(AddReport , self).clean()
