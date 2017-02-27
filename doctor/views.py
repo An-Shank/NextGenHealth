@@ -60,10 +60,38 @@ def login_user(request) :
             context.update({'message' : 'Invalid User'})
     return render(request , template , context)
 
-def logout_user(request) :
-    logout(request)
-    form = DocLogin()
-    return render(request , 'doc_user.html' , {'form' : form , 'title' : "Doctor Login" , 'message' : 'User Logged out'})
+# @login_required(login_url='/doctor/')
+# def logout_user(request) :
+#     logout(request)
+#     form = DocLogin()
+#     ds = Doctor.objects.all()
+#     username = password = ""
+#     success = 0
+#     template = 'doc_user.html'
+#     context = {'form' : form , 'title' : "Doctor Login" , 'message' : ''}
+#     if request.POST :
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user = authenticate(username = username , password = password)
+#         if user is not None :
+#             if user.is_active :
+#                 for d in ds :
+#                     if str(d.user) == username :
+#                         success = 1
+#                         break
+#                 if success == 1 :
+#                     login(request , user)
+#                     out = d.doc_id
+#                     return HttpResponseRedirect(reverse('patient_index' , args=[out]))
+#                 else :
+#                     context.update({'message' : 'User not Permitted'})
+#             else :
+#                 context.update({'message' : 'User is disabled'})
+#         else :
+#             context.update({'message' : 'Invalid User'})
+#     else :
+#         context.update({'message' : 'User Logged Out'})
+#     return render(request , template , context)
 
 @login_required(login_url = '/doctor/')
 def patient_view(request , **kwargs) :

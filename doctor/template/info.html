@@ -1,8 +1,11 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/sidebar.css">
+    <link rel="stylesheet" href="/static/animate.css">
+</head>
+<body style="background:url(/../media/images/background/medicines.jpg)no-repeat;background-size:100% 100%;">
     <div id="wrapper">
-      <div id="sidebar-wrapper">
+      <div id="sidebar-wrapper" class="animated slideInLeft">
             <h2>Patient Info</h2>
             {% for p in p_info %}
             {% if p.p_id|slugify == patient_id %}
@@ -25,7 +28,7 @@
         <div class="container-fluid" id="report-table">
             <h2>Patient Report</h2>
             <div style="text-align:right;">
-              <a href="./add_report/" class="btn btn-success" id="add-button">Add Report <span class="glyphicon glyphicon-plus"></span></a>
+              <a href="./add_report/" class="btn btn-success animated slideInRight" id="add-button">Add Report <span class="glyphicon glyphicon-plus"></span></a>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -36,7 +39,6 @@
                         <th>Doctor</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     {% for r in reports %}
                         {% if patient_id == r.patient_no.p_id|slugify %}
@@ -46,7 +48,7 @@
                                 {% for m in r.medsplit %}
                                     {% for i in mreports %}
                                         {% if m|slugify == i.medname|slugify %}
-                                        <p><a href="../med/med_id={{i.med_no}}/">{{m}}</a></p>
+                                        <p><a style="color:#" href="../med/med_id={{i.med_no}}/">{{m}}</a></p>
                                         {%endif%}
                                     {%endfor%}
                                 {%endfor%}
@@ -61,4 +63,4 @@
         </div>
       </div>
     </div>
-</head>
+</body>

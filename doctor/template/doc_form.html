@@ -8,15 +8,16 @@
             $("body").fadeIn(2000);
     });
 </script> -->
-  <nav class="navbar navbar-inverse">
+  <link rel="stylesheet" href="/static/animate.css">
+  <nav class="navbar navbar-inverse animated slideInDown">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">NextGenHealth</a>
       </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li>
+        <li><a href="#">History</a></li>
+        <li><a href="#">Statistics</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% for d in doc %}
@@ -29,9 +30,9 @@
     </div>
   </nav>
 </head>
-<body style="background:url(/../media/images/background/bg-doc_form.jpg)no-repeat;background-size:100% 100%;">
+<body style="background:url(/../media/images/background/pulse.jpg)no-repeat;background-size:100% 100%;">
   <div class="container">
-    <div  class="row" style="text-align:center;">
+    <div  class="row animated slideInLeft" style="text-align:center;">
       <div class="col-sm-4 col-sm-offset-4" style="margin-top:15% ;">
         <h1 class="text-center">{{title}}</h1>
         <form action="." method="POST">  {% csrf_token %}

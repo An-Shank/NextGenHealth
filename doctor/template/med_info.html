@@ -1,45 +1,49 @@
+<head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/static/animate.css">
+</head>
+<body style="background:url(/../media/images/background/medicine.jpg)no-repeat;background-size:100% 100%;">
 <div style="text-align:center;">
   <h2>MEDICINE DETAILS</h2>
 </div>
 <div style="text-align:right;">
-  <strong>Medicine ID : {{med_id}}</strong>
+  <span class="label label-success">Medicine ID : {{med_id}}</span>
 </div>
 {% for m in mreports %}
     {% if med_id == m.med_no|slugify %}
     <div class="panel-group">
       <div class="panel panel-info">
         <div class="panel-heading">
-          <h4 class="panel-title">
+          <h4 class="panel-title animated slideInLeft">
             <strong>Generic Name</strong>
           </h4>
         </div>
         <div>
-          <div class="panel-body">
+          <div class="panel-body animated fadeInUp">
             {{m.medname}}
           </div>
         </div>
       </div>
       <div class="panel panel-info">
         <div class="panel-heading">
-          <h4 class="panel-title">
+          <h4 class="panel-title animated slideInLeft">
             <strong>Description</strong>
           </h4>
         </div>
         <div>
-          <div class="panel-body">
+          <div class="panel-body animated fadeInUp">
             {{m.details}}
           </div>
         </div>
       </div>
       <div class="panel panel-info">
         <div class="panel-heading">
-          <h4 class="panel-title">
+          <h4 class="panel-title animated slideInLeft">
             <strong>Side Effects</strong>
           </h4>
         </div>
         <div>
-          <div class="panel-body">
+          <div class="panel-body animated fadeInUp">
             {{m.side_effect}}
           </div>
         </div>
@@ -47,3 +51,4 @@
     </div>
     {% endif %}
 {% endfor %}
+</body>
