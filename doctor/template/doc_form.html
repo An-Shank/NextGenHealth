@@ -1,38 +1,141 @@
 <html>
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <!-- <script type="text/javascript" src="/static/jquery-3.1.1.min.js"></script>
-  <script type="text/javascript">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+  <script type="text/javascript" src="/static/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <!-- <script type="text/javascript">
     $(document).ready(function() {
             $("body").css("display", "none");
             $("body").fadeIn(2000);
     });
 </script> -->
+<style>
+        .affix {
+            top: 0;
+            width: 100%;
+        }
+
+            .affix + .container-fluid {
+                padding-top: 50px;
+            }
+            #tag {
+              color: #fff;
+              position: relative;
+            }
+            #tag:hover {
+              color: #000;
+            }
+            #tag::before {
+              content: '';
+              display: block;
+              height: 5px;
+              background-color: #000;
+              position: absolute;
+              top: 50px;
+              width: 0%;
+              transition: all ease-in-out 500ms;
+            }
+            #tag:hover::before {
+              width: 80%;
+            }
+            #tag::after {
+              color: #000;
+            }
+    </style>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="/static/animate.css">
-  <nav class="navbar navbar-inverse animated slideInDown">
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'  type='text/css'>
+  <div class="container-fluid">
+  <div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#ffffff;margin-top:0;">
+    <a href="#" style="text-decoration:none;color:#aaaaaa;font-family:Lobster;">NextGenHealth</a>
+  </div>
+</div>
+  <nav class="navbar navbar-default" data-spy="affix" data-offset-top="50" style="background-color:#ff5a09;border:none;">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">NextGenHealth</a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
       </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">History</a></li>
-        <li><a href="#">Statistics</a></li>
+      <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav" style="color:#ffffff;">
+        <li id="hm"><a href="#Home" onclick="openTab('Home')" data-toggle="modal" data-target="#Home" id="tag">Patient</a></li>
+        <li id="hist"><a href="#" onclick="openTab('History')" id="tag">History</a></li>
+        <li id="stat"><a href="#" onclick="openTab('Statistics')" id="tag">Statistics</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% for d in doc %}
         {% if d.doc_id|slugify == did %}
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{d.doc_name}}</a></li>
-        <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        <li><a href="#" onclick="openTab('Profile')" id="tag"><span class="glyphicon glyphicon-user"></span> {{d.doc_name}}</a></li>
+        <li><a href="../logout" id="tag"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         {% endif %}
         {% endfor %}
       </ul>
     </div>
+    </div>
   </nav>
+  <div id="History" class="tab" style="display:none;margin-top:50px;color:#999999;">
+    <h3 class="text-center" style="font-size:24px;">Medicines Prescribed</h3>
+    <table class="table table-striped" style="color:#999999;font-size:24px">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Medicines</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for d in doc %}
+          {% if d.doc_id|slugify == did %}
+          {% for r in rep %}
+          {% if r.doc == d.doc_name %}
+                    <tr>
+                        <td>{{r.date}}</td>
+                        <td>
+                        {% for m in r.medsplit %}
+                            {% for i in mreports %}
+                                {% if m|slugify == i.medname|slugify %}
+                                <p><a style="text-decoration:none;" href="../med/med_id={{i.med_no}}/">{{m}}</a></p>
+                                {%endif%}
+                            {%endfor%}
+                        {%endfor%}
+                      </td>
+                        <td>{{r.notes}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+        </tbody>
+    </table>
+  </div>
+  <div id="Statistics" class="tab" style="display:none;">
+    <p>this tab for statistics</p>
+  </div>
+  <div id="Profile" class="tab" style="display:block;background-color:#131313;color:#999999;font-size:24px;">
+    {% for d in doc %}
+    {% if d.doc_id|slugify == did %}
+    <ul style="list-style:none;" align="middle">
+      <li><img src="/../media/{{d.doc_image}}" alt="{{d.doc_image}}" class="img-circle img-responsive" width="150" style="display:block;margin-left: auto;margin-right: auto;"/></li>
+      <li>Doctor ID : {{did}} <li>
+      <li>Name : {{d.doc_name}} </li>
+      <li>Sex : {{d.doc_sx}} </li>
+      <li>Address : {{d.doc_addr}} </li>
+      <li>Contact No : {{d.doc_phone}} </li>
+    </ul>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
 </head>
-<body style="background:url(/../media/images/background/pulse.jpg)no-repeat;background-size:100% 100%;">
-  <div class="container">
-    <div  class="row animated slideInLeft" style="text-align:center;">
+<!-- <body style="background:url(/../media/images/background/Digital_Doc.jpg)no-repeat;background-size:100% 100%;"> -->
+<body style="background-color:#131313;font-family: Courgette;font-size:24px;">
+  <!-- <div class="container" style="">
+    <div  class="row animated slideInLeft tab" style="text-align:center;background-color:#ffffff;margin-left:auto;margin-right:auto;" id="Home">
       <div class="col-sm-4 col-sm-offset-4" style="margin-top:15% ;">
         <h1 class="text-center">{{title}}</h1>
         <form action="." method="POST">  {% csrf_token %}
@@ -44,6 +147,56 @@
         </form>
       </div>
     </div>
+  </div> -->
+  <!-- <button type="button" style="margin-top:15%;" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+
+<!-- Modal -->
+<div id="Home" class="modal fade tab" role="dialog" style="margin-top:15%;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="text-align:center;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Patient Report</h4>
+      </div>
+      <div class="modal-body">
+        <form action="." method="POST">  {% csrf_token %}
+          <div class="input-group form-group {% if form.non_field_errors %}has-error{% endif %}">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            {{form.pid}}
+          </div>
+        </form>
+        <div class="modal-footer" style="text-align:center;">
+          <input class="btn btn-primary" type="submit" value="Submit">
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
 </body>
 </html>
+<script type="text/javascript">
+function openTab(tabName) {
+    var i;
+    var x = document.getElementsByClassName("tab");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    document.getElementById(tabName).style.display = "block";
+    if(tabName == "Home"){
+      document.getElementById("Profile").style.display = "block";
+    }
+}
+</script>
+<!-- <script>
+$(document).ready(function(){
+    // Show the Modal on load
+    $("#Home").modal("show");
+    $("#Home").modal({backdrop: true});
+    $("#Home").modal({keyboard: true});
+});
+</script> -->
+<script>
+/* affix the navbar after scroll below header */

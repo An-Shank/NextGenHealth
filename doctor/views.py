@@ -97,8 +97,10 @@ def login_user(request) :
 def patient_view(request , **kwargs) :
     form = SubmitPID()
     template = 'doc_form.html'
-    doctor = Doctor.objects.all()
-    context = {'form' : form , 'title' : 'Patient Report' , 'doc' : doctor , 'did' : kwargs['doc_id']}
+    doctor = Doctor.objects.filter(doc_id=kwargs['doc_id'])
+    report = Report.objects.all()
+    mreports = MedReport.objects.all()
+    context = {'form' : form , 'title' : 'Patient Report' , 'doc' : doctor , 'did' : kwargs['doc_id'] , 'rep' : reversed(report) , 'mreports' : mreports}
     if request.POST :
         form = SubmitPID(request.POST)
         report = Report.objects.all()
@@ -166,7 +168,7 @@ def info(request , patient_id , **kwargs) :
     mreports = MedReport.objects.all()
     p_info = Patient.objects.all()
     template = loader.get_template('info.html')
-    context = {'reports' : reports , 'patient_id' : patient_id , 'mreports' : mreports , 'p_info' : p_info}
+    context = {'reports' : reversed(reports) , 'patient_id' : patient_id , 'mreports' : mreports , 'p_info' : p_info}
     try:
         pid = Report.objects.filter(patient_no=patient_id)
     except Report.DoesNotExist:
@@ -190,6 +192,7 @@ def report_view(request , **kwargs) :
     template = 'rep_form.html'
     meds = MedReport.objects.all()
     context = {'form' : form , 'title' : 'Add Report' , 'meds' : meds}
+    out_med = []
     if request.POST :
         form = AddReport(request.POST)
         docs = Doctor.objects.all()
@@ -202,7 +205,7 @@ def report_view(request , **kwargs) :
         p = Patient.objects.get(pk=p_id)
         template = 'rep_form.html'
         if form.is_valid() :
-            out_med = form.cleaned_data['premeds']
+            out_med = request.POST['premeds']
             out_note = form.cleaned_data['notes']
             r = Report()
             r.med = out_med

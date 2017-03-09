@@ -1,12 +1,21 @@
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="/static/animate.css">
+  <script type="text/javascript">
+  function addmore(){
+    var content = document.getElementById('add').innerHTML;
+    var texts ="<div class='input-group form-group {% if form.non_field_errors %}has-error{% endif %}'><span class='input-group-addon'>Meds<\/span>"+'{{form.premeds}}'+"<datalist id = 'medlist'>{% for m in meds %}<option value='"+'{{m.medname}}'+"'><\/option>{% endfor %}<\/datalist><\/div>";
+    document.getElementById('add').innerHTML = content + texts;
+  }
+  </script>
 </head>
 <body style="background:url(/../media/images/background/medicines.jpg)no-repeat;background-size:100% 100%;">
   <div class="container-fluid">
     <div style="text-align:center;margin-top:15%;" class="col-sm-4 col-sm-offset-4 animated pulse">
       <h1 id="title">{{title}}</h1>
       <form action="." method="POST">{% csrf_token %}
+        <div id="add">
           <div class="input-group form-group {% if form.non_field_errors %}has-error{% endif %}">
             <span class="input-group-addon">Meds</span>
             {{form.premeds}}
@@ -20,8 +29,10 @@
             <span class="input-group-addon">Notes</span>
             {{form.notes}}
           </div>
+        </div>
           <input class="btn btn-primary" type="submit" value="Save">
       </form>
+      <input type="button" class="btn btn-success" onclick="addmore()" value="Add"/>
     </div>
   </div>
 </body>
