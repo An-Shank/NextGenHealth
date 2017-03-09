@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title> Result</title>
+	<style type="text/css">
+		table{
+			border: 1px solid black;
+		}
+		th,td{
+			border-right: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		
+		<h1> Results </h1>
+		<table>
+			<thead>
+				<tr> 
+					<th> Qty </th>
+					<th> Days </th>
+					<th style="border: 0px;"> Per Day </th>
+				</tr>
+			</thead>
+
+			<tbody>
+			{% for d in data %}
+				<tr >
+					<td> {{d.qty}} </td>
+					<td> {{d.days}} </td>
+					<td style="border: 0px;"> {{d.per_day}} </td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
