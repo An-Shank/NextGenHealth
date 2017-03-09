@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Search
+	</title>
+</head>
+<body>
+	<div>
+	    <form method="post" {% if message %} action= "/search/" {% else %} action="." {% endif %}>
+			{% csrf_token %}
+			<input type="text" name="phid">
+			<input type="submit">
+		</form>
+		{% if message %}
+
+		<p> {{message}} </p>
+
+		{% endif %}
+	</div>
+</body>
+</html>

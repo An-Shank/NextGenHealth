@@ -78,4 +78,4 @@ class Presciption(models.Model) :
     days = models.IntegerField()
 
     def __str__(self) :
-        return self.med_id
+         return self.med_id

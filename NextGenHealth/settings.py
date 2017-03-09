@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'pharmacy',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +59,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR , 'NextGenHealth/template') ,
-            os.path.join(BASE_DIR , 'doctor/template')
+            os.path.join(BASE_DIR , 'doctor/template'),
+            os.path.join(BASE_DIR , 'pharmacy/template')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
