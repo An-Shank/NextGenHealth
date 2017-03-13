@@ -11,7 +11,7 @@ from django import forms
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate , login , logout
-from doctor.models import Report,Presciption
+from doctor.models import Report,Prescription
 #from .models import PHARMACY
 
 #def SRRes(request):
@@ -88,7 +88,7 @@ def infos(request , patient_id , **kwargs) :
     reports = Report.objects.all()
     mreports = MedReport.objects.all()
     p_info = Patient.objects.all()
-    result = Presciption.objects.all()
+    result = Prescription.objects.all()
     template = loader.get_template('infos.html')
     context = {'reports' : reports , 'patient_id' : patient_id , 'mreports' : mreports , 'p_info' : p_info,'result':result}
     try:
@@ -103,7 +103,7 @@ def infos(request , patient_id , **kwargs) :
 
 #def searchResult(request):
 #	pat_no = int(request.POST['pid'])
-#	result = Presciption.objects.filter(pat_no=pat_no)
+#	result = Prescription.objects.filter(pat_no=pat_no)
 #	if len(result)==0:
 #		return render(request,'page.html',{ 'message': "Doesn't exists" } )
 	#print result.quantity

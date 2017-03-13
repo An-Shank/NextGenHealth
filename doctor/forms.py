@@ -66,15 +66,6 @@ class AddReport(forms.Form) :
     dose = forms.ChoiceField(choices = calculate_dose() , widget = forms.Select(attrs={'class' : 'form-control'}))
     # day = forms.IntegerField(label="" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Days'}))
     day = forms.ChoiceField(choices = calculate_days() , widget = forms.Select(attrs={'class' : 'form-control'}))
+    attach = forms.ImageField(required = False , widget = forms.ClearableFileInput(attrs={'class' : 'btn btn-default'}))
     # times = forms.TypedMultipleChoiceField(empty_value="Fase" , choices = [('mo' , 'Morning') , ('noo' , 'Noon') , ('ni' , 'Night')] , widget = forms.CheckboxSelectMultiple)
     # times = forms.MultipleChoiceField(choices = [('m' , 'Morning') , ('no' , 'Noon') , ('n' , 'Night')] , widget = forms.CheckboxSelectMultiple(attrs={'type' : 'hidden' , 'name' : 'times'}))
-    # def process(self) :
-    #     cd = self.cleaned_data
-    #     morning = cd['morning']
-    #     if not morning :
-    #         morning = False
-    #     return morning
-    # def clean(self) :
-    #     cleaned_data = super(AddReport , self).clean()
-    #     out_med = cleaned_data['premeds']
-    #     out_note = cleaned_data['notes']

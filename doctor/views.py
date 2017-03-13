@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse , Http404 , HttpResponseRedirect
-from .models import Report , MedReport , Patient , Doctor , Presciption
+from .models import Report , MedReport , Patient , Doctor , Prescription
 from django.template import loader , RequestContext
 from django.views import View
 from .forms import SubmitPID , DocLogin , AddReport
@@ -91,7 +91,7 @@ def patient_view(request , **kwargs) :
     doctor = Doctor.objects.filter(doc_id=kwargs['doc_id'])
     report = Report.objects.all()
     mreports = MedReport.objects.all()
-    pres_info = Presciption.objects.all()
+    pres_info = Prescription.objects.all()
     context = {'form' : form , 'title' : 'Patient Report' , 'doc' : doctor , 'did' : kwargs['doc_id'] , 'rep' : reversed(report) , 'mreports' : mreports , 'pres_info' : pres_info}
     if request.POST :
         form = SubmitPID(request.POST)
@@ -159,7 +159,7 @@ def info(request , patient_id , **kwargs) :
     reports = Report.objects.all()
     mreports = MedReport.objects.all()
     p_info = Patient.objects.all()
-    pres_info = Presciption.objects.all()
+    pres_info = Prescription.objects.all()
     template = loader.get_template('info.html')
     context = {'reports' : reversed(reports) , 'patient_id' : patient_id , 'mreports' : mreports , 'p_info' : p_info , 'pres_info' : pres_info}
     try:
@@ -213,7 +213,7 @@ def report_view(request , **kwargs) :
             r.save()
             count = 0
             for o in out_med :
-                pr = Presciption()
+                pr = Prescription()
                 for i in meds :
                     if o == i.medname :
                         pr.med_id = i

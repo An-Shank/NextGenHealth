@@ -1,8 +1,7 @@
 from django.db import models
 from time import strftime
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 # Create your models here.
 
 class Doctor(models.Model) :
@@ -15,15 +14,6 @@ class Doctor(models.Model) :
     doc_phone = models.BigIntegerField()
     def __str__(self) :
         return self.doc_name
-
-# @receiver(post_save, sender=User)
-# def create_user_doctor(sender, instance, created, **kwargs):
-#     if created:
-#         Doctor.objects.create(user=instance)
-#
-# @receiver(post_save, sender=User)
-# def save_user_doctor(sender, instance, **kwargs):
-#     instance.doctor.save()
 
 class Patient(models.Model) :
     p_id = models.BigIntegerField(primary_key=True)
@@ -47,6 +37,7 @@ class Report(models.Model) :
     patient_no = models.ForeignKey(Patient)
     date = models.DateTimeField(auto_now_add = True)
     med = models.CharField(max_length = 1000)
+    attach = models.ImageField(upload_to = 'images/attachments' , null = True , blank = True)
     doc = models.CharField(max_length = 50)
 
     class Meta :
@@ -55,6 +46,9 @@ class Report(models.Model) :
     @property
     def medsplit(self) :
         return self.med.split(',')
+    @property
+    def imgsplit(self) :
+        return str(self.attach).split('/')[2][0:10]
 
     def __str__(self) :
         return str(self.date)
@@ -62,14 +56,14 @@ class Report(models.Model) :
 class MedReport(models.Model) :
     med_no = models.BigIntegerField(primary_key=True)
     medname = models.CharField(max_length = 50)
-    # bname = models.CharField(max_length = 100)
+    gname = models.CharField(max_length = 100)
     details = models.CharField(max_length = 1000)
     side_effect = models.CharField(max_length = 1000)
 
     def __str__(self) :
         return self.medname
 
-class Presciption(models.Model) :
+class Prescription(models.Model) :
     pres_id = models.ForeignKey(Report)
     dosage = models.DecimalField(max_digits = 3 , decimal_places = 2 , default = 1)
     morn = models.BooleanField()

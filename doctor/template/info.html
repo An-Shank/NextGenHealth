@@ -37,7 +37,7 @@
           height: 5px;
           background-color: #000;
           position: absolute;
-          top: 45px;
+          top: 43px;
           width: 0%;
           transition: all ease-in-out 500ms;
         }
@@ -47,6 +47,10 @@
     .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
    background-color: #fff;
  }
+ .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+background-color: #aaa;
+color: #000;
+}
  #displayed
  {
    display: block;
@@ -173,6 +177,7 @@
                 <thead>
                     <tr>
                         <th>Date</th>
+                        <th>Attachments</th>
                         <th>Medicines</th>
                         <th>Days</th>
                         <th>Dosage</th>
@@ -183,12 +188,15 @@
                     {% for r in reports %}
                         {% if patient_id == r.patient_no.p_id|slugify %}
                             <tr>
-                                <td>{{r.date}}</td>
+                              <td>{{r.date}}</td>
+                              <td>{% if r.attach %}
+                              <p><a href="/../media/{{r.attach}}">{{r.imgsplit}}</a></p>
+                              {% endif %}</td>
                                 <td>
                                 {% for m in r.medsplit %}
                                     {% for i in mreports %}
                                         {% if m|slugify == i.medname|slugify %}
-                                        <p><a style="color:#" href="../med/med_id={{i.med_no}}/">{{m}}</a></p>
+                                        <p><a href="../med/med_id={{i.med_no}}/">{{m}}</a></p>
                                         {%endif%}
                                     {%endfor%}
                                 {%endfor%}
