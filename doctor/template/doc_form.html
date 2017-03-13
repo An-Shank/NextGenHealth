@@ -63,7 +63,6 @@
   margin: auto;
   object-fit: cover;
 }
-
 .carousel-inner>.item {
   height: calc(100% - 121px);
   width: 100%;
@@ -80,7 +79,7 @@
     z-index: -9;
   }
 }
-#info{
+body{
   background: -webkit-linear-gradient(left top, red, blue);
   background: -o-linear-gradient(left top, red, blue);
   background: -moz-linear-gradient(left top, red, blue);
@@ -105,7 +104,7 @@
 }
 .modal-content {
   background-color: #000;
-  opacity: 0.9;
+  opacity: 0.8;
 }
   </style>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
@@ -203,7 +202,8 @@
 </div>
 </head>
 
-<body style="font-family: Ubuntu;font-size:18px;" id="info">
+<body style="font-family: Ubuntu;font-size:18px;">
+  <div id="info">
   <div class="tab" id="Home">
     <div id="myCarousel" class="carousel slide img-responsive" data-ride="carousel">
   <!-- Indicators -->
@@ -282,6 +282,7 @@
     </div>
 
   </div>
+</div>
 </div>
 </body>
 </html>

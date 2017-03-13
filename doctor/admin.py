@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Report , MedReport , Patient , Doctor , Prescription
+from .models import Report , MedReport , Doctor , Prescription
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
@@ -15,7 +15,6 @@ from django.contrib.auth.models import User
 # admin.site.unregister(User)
 # admin.site.register(User, UserAdmin)
 admin.site.register(Doctor)
-admin.site.register(Patient)
 admin.site.register(Report)
 admin.site.register(MedReport)
 admin.site.register(Prescription)

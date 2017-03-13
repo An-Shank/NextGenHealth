@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pharmacy.apps.PharmacyConfig',
-    'chart_tools',
+    'patient.apps.PatientConfig',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +60,8 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR , 'NextGenHealth/template') ,
             os.path.join(BASE_DIR , 'doctor/template'),
-            os.path.join(BASE_DIR , 'pharmacy/template')
+            os.path.join(BASE_DIR , 'pharmacy/template'),
+            os.path.join(BASE_DIR , 'patient/template'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
