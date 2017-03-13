@@ -2,9 +2,85 @@
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/static/animate.css">
+<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'  type='text/css'>
+<style>
+#info {
+  background: -webkit-linear-gradient(left top, green, brown);
+  background: -o-linear-gradient(left top, green, brown);
+  background: -moz-linear-gradient(left top, green, brown);
+  background: linear-gradient(left top, green, brown);
+}
+#nav {
+  background-color: inherit;
+}
+.affix {
+    top: 0;
+    width: 100%;
+}
+.affix  #tag::before{
+  background-color: #fff !important;
+}
+.affix #tag:hover {
+  color: #fff !important;
+}
+    .affix + .container-fluid {
+        padding-top: 50px;
+    }
+    #tag {
+      color: #fff;
+      position: relative;
+    }
+    #tag:hover {
+      color: #000;
+    }
+    #tag::before {
+      content: '';
+      display: block;
+      height: 5px;
+      background-color: #000;
+      position: absolute;
+      top: 45px;
+      width: 0%;
+      transition: all ease-in-out 500ms;
+    }
+    #tag:hover::before {
+      width: 80%;
+    }
+    #tag::after {
+      color: #000;
+    }
+</style>
 </head>
-<body style="background:url(/../media/images/background/medicine.jpg)no-repeat;background-size:100% 100%;">
-<div style="text-align:center;">
+<body style="font-family: Ubuntu;font-size:18px;" id="info">
+  <div class="container-fluid" id="title">
+  <div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#fff;margin-top:0;">
+    <a href=".." style="text-decoration:none;color:#fff;font-family:Lobster;">NextGenHealth</a>
+  </div>
+</div>
+<div id="nav-wrapper">
+  <nav id="nav" class="navbar navbar-default" data-spy="affix" data-offset-top="70" style="border:none;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav" style="color:#fff;">
+        <li id="hm"><a href="../.." id="tag"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="../../../logout" id="tag"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+</div>
+<div style="text-align:center;color:#fff;">
   <h2>MEDICINE DETAILS</h2>
 </div>
 <div style="text-align:right;">
@@ -53,3 +129,12 @@
     {% endif %}
 {% endfor %}
 </body>
+<script type="text/javascript">
+$(function() {
+    $('#nav-wrapper').height($("#nav").height());
+
+    $('#nav').affix({
+        offset: { top: $('#nav').offset().top }
+    });
+});
+</script>

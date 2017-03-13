@@ -47,7 +47,6 @@ class Report(models.Model) :
     patient_no = models.ForeignKey(Patient)
     date = models.DateTimeField(auto_now_add = True)
     med = models.CharField(max_length = 1000)
-    notes = models.CharField(max_length = 1000)
     doc = models.CharField(max_length = 50)
 
     class Meta :
@@ -71,11 +70,13 @@ class MedReport(models.Model) :
         return self.medname
 
 class Presciption(models.Model) :
-    pat_no = models.ForeignKey(Patient)
-    med_id = models.ForeignKey(MedReport)
-    quantity = models.DecimalField(max_digits = 3 , decimal_places = 2)
-    per_day = models.IntegerField()
-    days = models.IntegerField()
+    pres_id = models.ForeignKey(Report)
+    dosage = models.DecimalField(max_digits = 3 , decimal_places = 2 , default = 1)
+    morn = models.BooleanField()
+    noon = models.BooleanField()
+    nite = models.BooleanField()
+    timing = models.CharField(max_length = 10)
+    days = models.IntegerField(default = 1)
 
     def __str__(self) :
-         return self.med_id
+         return str(self.pres_id)

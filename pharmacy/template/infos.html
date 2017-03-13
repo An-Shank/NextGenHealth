@@ -27,8 +27,8 @@
     <div class="page-content-wrapper">
         <div class="container-fluid" id="report-table">
             <h2>Patient Report</h2>
-            
-            
+
+
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -59,18 +59,18 @@
                                 <td>{{r.notes}}</td>
                                 <td>{{r.doc}}</td>
             {% for d in result %}
-                
+
                     <td> {{d.quantity}} </td>
                     <td> {{d.days}} </td>
                     <td> {{d.per_day}} </td>
-                
+
 
                             </tr>
 
                 {%endfor%}
                         {% endif %}
                     {% endfor %}
-                   
+
                 </tbody>
             </table>
         </div>

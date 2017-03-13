@@ -15,4 +15,4 @@ class PHARMACY(models.Model) :
     user = models.OneToOneField(User , on_delete = models.CASCADE)
 
     def __str__(self):
-		return self.ph_name
+        return self.ph_name

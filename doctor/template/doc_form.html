@@ -3,20 +3,23 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
   <script type="text/javascript" src="/static/jquery-3.1.1.min.js"></script>
   <script type="text/javascript" src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-  <!-- <script type="text/javascript">
-    $(document).ready(function() {
-            $("body").css("display", "none");
-            $("body").fadeIn(2000);
-    });
-</script> -->
 <style>
         .affix {
             top: 0;
             width: 100%;
+            position: fixed;
+            background-color: #000 !important;
+            transition: all ease-in-out 500ms;
         }
-
+        .affix  #tag::before{
+          background-color: #fff !important;
+        }
+        .affix #tag:hover {
+          color: #fff !important;
+        }
             .affix + .container-fluid {
-                padding-top: 50px;
+                padding-top: 70px;
+
             }
             #tag {
               color: #fff;
@@ -31,7 +34,7 @@
               height: 5px;
               background-color: #000;
               position: absolute;
-              top: 50px;
+              top: 43px;
               width: 0%;
               transition: all ease-in-out 500ms;
             }
@@ -41,17 +44,61 @@
             #tag::after {
               color: #000;
             }
-    </style>
+            .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+           background-color: #aaa;
+           color: #000;
+        }
+        .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+       background-color: #fff;
+       color: #000;
+    }
+        .carousel {
+          position: relative;
+        }
+
+.carousel-inner img {
+  width: 100%;
+  margin: auto;
+  object-fit: cover;
+}
+
+.carousel-inner>.item {
+  height: calc(100% - 121px);
+  width: 100%;
+  z-index:-9;
+}
+
+@media (max-width: 600px) {
+  .carousel-caption {
+    display: none;
+  }
+}
+@media (max-width: 676px) {
+  .carousel {
+    z-index: -9;
+  }
+}
+#info{
+  background: -webkit-linear-gradient(left top, red, blue);
+  background: -o-linear-gradient(left top, red, blue);
+  background: -moz-linear-gradient(left top, red, blue);
+  background: linear-gradient(left top, red, blue);
+}
+#nav {
+  background-color: inherit;
+}
+  </style>
   <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="/static/animate.css">
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'  type='text/css'>
-  <div class="container-fluid">
-  <div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#ffffff;margin-top:0;">
-    <a href="#" style="text-decoration:none;color:#aaaaaa;font-family:Lobster;">NextGenHealth</a>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'  type='text/css'>
+  <div class="container-fluid" id="title">
+  <div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#fff;margin-top:0;">
+    <a href=".." style="text-decoration:none;color:#fff;font-family:Lobster;">NextGenHealth</a>
   </div>
 </div>
-  <nav class="navbar navbar-default" data-spy="affix" data-offset-top="50" style="background-color:#ff5a09;border:none;">
+<div id="nav-wrapper">
+  <nav id="nav" class="navbar navbar-default" data-spy="affix" data-offset-top="70" style="border:none;">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -62,10 +109,9 @@
         </button>
       </div>
       <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav" style="color:#ffffff;">
-        <li id="hm"><a href="#Home" onclick="openTab('Home')" data-toggle="modal" data-target="#Home" id="tag">Patient</a></li>
+      <ul class="nav navbar-nav" style="color:#fff;">
+        <li id="hm"><a href="#" onclick="openTab('Patient')" data-toggle="modal" data-target="#Patient" id="tag">Patient</a></li>
         <li id="hist"><a href="#" onclick="openTab('History')" id="tag">History</a></li>
-        <li id="stat"><a href="#" onclick="openTab('Statistics')" id="tag">Statistics</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% for d in doc %}
@@ -78,14 +124,16 @@
     </div>
     </div>
   </nav>
-  <div id="History" class="tab" style="display:none;margin-top:50px;color:#999999;">
-    <h3 class="text-center" style="font-size:24px;">Medicines Prescribed</h3>
-    <table class="table table-striped" style="color:#999999;font-size:24px">
+</div>
+  <div id="History" class="tab" style="display:none;margin-top:50px;">
+    <h3 class="text-center" style="font-size:24px;font-weight:bold;color:#fff;">Medicines Prescribed</h3>
+    <table class="table table-striped" style="color:#fff;font-size:18px" id="tab">
         <thead>
             <tr>
                 <th>Date</th>
                 <th>Medicines</th>
-                <th>Notes</th>
+                <th>Days</th>
+                <th>Dosage</th>
             </tr>
         </thead>
         <tbody>
@@ -104,7 +152,14 @@
                             {%endfor%}
                         {%endfor%}
                       </td>
-                        <td>{{r.notes}}</td>
+                      <td>             {% for p in pres_info %}
+                                  {% if p.pres_id == r %}
+
+                    <p>{{p.days}}</p>{% endif %}
+                    {% endfor %}</td>
+                    <td>{% for p in pres_info %}
+                                {% if p.pres_id == r %}<p>{{p.dosage}}</p>{% endif %}
+                                {% endfor %}</td>
                     </tr>
                     {% endif %}
                     {% endfor %}
@@ -113,10 +168,7 @@
         </tbody>
     </table>
   </div>
-  <div id="Statistics" class="tab" style="display:none;">
-    <p>this tab for statistics</p>
-  </div>
-  <div id="Profile" class="tab" style="display:block;background-color:#131313;color:#999999;font-size:24px;">
+  <div id="Profile" class="tab" style="display:none;color:#fff;font-size:24px;">
     {% for d in doc %}
     {% if d.doc_id|slugify == did %}
     <ul style="list-style:none;" align="middle">
@@ -132,28 +184,66 @@
   </div>
 </div>
 </head>
-<!-- <body style="background:url(/../media/images/background/Digital_Doc.jpg)no-repeat;background-size:100% 100%;"> -->
-<body style="background-color:#131313;font-family: Courgette;font-size:24px;">
-  <!-- <div class="container" style="">
-    <div  class="row animated slideInLeft tab" style="text-align:center;background-color:#ffffff;margin-left:auto;margin-right:auto;" id="Home">
-      <div class="col-sm-4 col-sm-offset-4" style="margin-top:15% ;">
-        <h1 class="text-center">{{title}}</h1>
-        <form action="." method="POST">  {% csrf_token %}
-          <div class="input-group form-group {% if form.non_field_errors %}has-error{% endif %}">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            {{form.pid}}
-          </div>
-            <input class="btn btn-primary" type="submit" value="Submit">
-        </form>
+
+<body style="font-family: Ubuntu;font-size:18px;" id="info">
+  <div class="tab" id="Home">
+    <div id="myCarousel" class="carousel slide img-responsive" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active" style="z-index:-9;">
+      <img src="../../media/images/background/index.jpg" alt="About">
+      <div class="carousel-caption">
+        <h3>About</h3>
+        <p>This provides a cloud based Patient Record tracking system.</p>
       </div>
     </div>
-  </div> -->
-  <!-- <button type="button" style="margin-top:15%;" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+    <div class="item">
+      <img src="../../media/images/background/doctor.jpg" alt="Doctor" >
+      <div class="carousel-caption">
+        <h3>For Doctor</h3>
+        <p>Doctors can access Patient Report and add New Reports.</p>
+      </div>
+    </div>
 
+    <div class="item">
+      <img src="../../media/images/background/patient.jpg" alt="Patient">
+      <div class="carousel-caption">
+        <h3>For Patient</h3>
+        <p>Patient can keep track of their reports whenever they want.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../../media/images/background/pharmacy.jpg" alt="Pharmacy">
+      <div class="carousel-caption">
+        <h3>For Pharmacy</h3>
+        <p>Pharmacies can view Patient Drug Details and Validate the Purchase.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+  </div>
 <!-- Modal -->
-<div id="Home" class="modal fade tab" role="dialog" style="margin-top:15%;">
+<div id="Patient" class="modal fade tab" role="dialog" style="margin-top:15%;">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="text-align:center;">
@@ -166,10 +256,10 @@
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
             {{form.pid}}
           </div>
-        </form>
         <div class="modal-footer" style="text-align:center;">
           <input class="btn btn-primary" type="submit" value="Submit">
         </div>
+        </form>
       </div>
     </div>
 
@@ -185,18 +275,17 @@ function openTab(tabName) {
         x[i].style.display = "none";
     }
     document.getElementById(tabName).style.display = "block";
-    if(tabName == "Home"){
-      document.getElementById("Profile").style.display = "block";
+    if(tabName == "Patient"){
+      document.getElementById("Home").style.display = "block";
     }
 }
 </script>
-<!-- <script>
-$(document).ready(function(){
-    // Show the Modal on load
-    $("#Home").modal("show");
-    $("#Home").modal({backdrop: true});
-    $("#Home").modal({keyboard: true});
+<script type="text/javascript">
+$(function() {
+    $('#nav-wrapper').height($("#nav").height());
+
+    $('#nav').affix({
+        offset: { top: $('#nav').offset().top }
+    });
 });
-</script> -->
-<script>
-/* affix the navbar after scroll below header */
+</script>

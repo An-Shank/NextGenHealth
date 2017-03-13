@@ -3,10 +3,10 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse , Http404 , HttpResponseRedirect
 from .models import PHARMACY
-from doctor.models import Patient,Report,MedReport 
+from doctor.models import Patient,Report,MedReport
 from django.template import loader , RequestContext
 from django.views import View
-from .forms import SubmitPID , PharLogin 
+from .forms import SubmitPID , PharLogin
 from django import forms
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -15,18 +15,18 @@ from doctor.models import Report,Presciption
 #from .models import PHARMACY
 
 #def SRRes(request):
-	#return HttpResponse("Invalid ID") 
+	#return HttpResponse("Invalid ID")
 
-#	return render(request,'search.html',{} )	
+#	return render(request,'search.html',{} )
 #def SR(request):
 #	ph_id = int(request.POST['phid'])
 #	result = PHARMACY.objects.filter(ph_id=ph_id)
 #	if len(result)==0:
 #		#return HttpResponseRedirect('/phar.html/')
-#		#return HttpResponse("Invalid ID") 
+#		#return HttpResponse("Invalid ID")
 #		return render(request,'phar.html',{'message': "Doesn't exists"})
 #	return render(request , 'phar.html' , {})
-def login_user(request) :
+def login_pharuser(request) :
     form = PharLogin()
     ds = PHARMACY.objects.all()
 
@@ -36,7 +36,7 @@ def login_user(request) :
             if str(d.user) == uname :
                 break
         out = d.ph_id
-        return HttpResponseRedirect(reverse('patient_index' , args=[out]))
+        return HttpResponseRedirect(reverse('pharpatient_index' , args=[out]))
     username = password = ""
     success = 0
     template = 'phar_user.html'
@@ -54,7 +54,7 @@ def login_user(request) :
                 if success == 1 :
                     login(request , user)
                     out = d.ph_id
-                    return HttpResponseRedirect(reverse('patient_index' , args=[out]))
+                    return HttpResponseRedirect(reverse('pharpatient_index' , args=[out]))
                 else :
                     context.update({'message' : 'User not Permitted'})
             else :
@@ -66,7 +66,7 @@ def login_user(request) :
 
 
 @login_required(login_url = '/pharmacy/')
-def patient_view(request , **kwargs) :
+def pharpatient_view(request , **kwargs) :
     form = SubmitPID()
     template = 'phar_form.html'
     pharmacy = PHARMACY.objects.all()
@@ -78,7 +78,7 @@ def patient_view(request , **kwargs) :
         ph_id = kwargs['ph_id']
         if form.is_valid() :
             out = form.cleaned_data['pid']
-            return HttpResponseRedirect(reverse('patient_info' , kwargs={'patient_id' : out , 'ph_id' : ph_id}))
+            return HttpResponseRedirect(reverse('pharpatient_info' , kwargs={'patient_id' : out , 'ph_id' : ph_id}))
     return render(request , template , context)
 
 
@@ -124,10 +124,10 @@ def infos(request , patient_id , **kwargs) :
 	# result = PHARMACY.objects.filter(ph_id=ph_id)
 	# if len(result)==0:
 	# 	#return HttpResponseRedirect('/phar.html/')
-	# 	#return HttpResponse("Invalid ID") 
+	# 	#return HttpResponse("Invalid ID")
 	# 	return render(request,'phar.html',{'message': "Doesn't exists"})
 #	return render(request,'page.html',{})
-def report_view(request , **kwargs) :
+def pharreport_view(request , **kwargs) :
     form = AddReport()
     template = 'rep_form.html'
     meds = MedReport.objects.all()
@@ -152,5 +152,5 @@ def report_view(request , **kwargs) :
             r.notes = out_note
             r.doc = d_name
             r.save()
-            return HttpResponseRedirect(reverse('patient_info' , kwargs={'patient_id' : p_id , 'ph_id' : ph_id}))
+            return HttpResponseRedirect(reverse('pharpatient_info' , kwargs={'patient_id' : p_id , 'ph_id' : ph_id}))
     return render(request , template , context)

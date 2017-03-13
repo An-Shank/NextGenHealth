@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse , Http404 , HttpResponseRedirect
-from .models import Report , MedReport , Patient , Doctor
+from .models import Report , MedReport , Patient , Doctor , Presciption
 from django.template import loader , RequestContext
 from django.views import View
 from .forms import SubmitPID , DocLogin , AddReport
@@ -8,21 +8,12 @@ from django import forms
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate , login , logout
+from graphos.sources.model import ModelDataSource
+from graphos.sources.simple import SimpleDataSource
+from graphos.renderers.yui import LineChart
 # from dal import autocomplete
 
 # Create your views here.
-'''def index(request) :
-    reports = Report.objects.all()
-    template = loader.get_template('doc_form.html')
-    context = {'reports' : reports}
-    return HttpResponse(template.render(context , request))'''
-
-# class MedicineAutoComplete(autocomplete.Select2QuerySetView) :
-#     def get_queryset(self) :
-#         qs = MedReport.objects.all()
-#         if self.q:
-#             qs = qs.filter(name__istartswith=self.q)
-#         return qs
 
 def login_user(request) :
     form = DocLogin()
@@ -100,7 +91,8 @@ def patient_view(request , **kwargs) :
     doctor = Doctor.objects.filter(doc_id=kwargs['doc_id'])
     report = Report.objects.all()
     mreports = MedReport.objects.all()
-    context = {'form' : form , 'title' : 'Patient Report' , 'doc' : doctor , 'did' : kwargs['doc_id'] , 'rep' : reversed(report) , 'mreports' : mreports}
+    pres_info = Presciption.objects.all()
+    context = {'form' : form , 'title' : 'Patient Report' , 'doc' : doctor , 'did' : kwargs['doc_id'] , 'rep' : reversed(report) , 'mreports' : mreports , 'pres_info' : pres_info}
     if request.POST :
         form = SubmitPID(request.POST)
         report = Report.objects.all()
@@ -167,8 +159,9 @@ def info(request , patient_id , **kwargs) :
     reports = Report.objects.all()
     mreports = MedReport.objects.all()
     p_info = Patient.objects.all()
+    pres_info = Presciption.objects.all()
     template = loader.get_template('info.html')
-    context = {'reports' : reversed(reports) , 'patient_id' : patient_id , 'mreports' : mreports , 'p_info' : p_info}
+    context = {'reports' : reversed(reports) , 'patient_id' : patient_id , 'mreports' : mreports , 'p_info' : p_info , 'pres_info' : pres_info}
     try:
         pid = Report.objects.filter(patient_no=patient_id)
     except Report.DoesNotExist:
@@ -196,23 +189,61 @@ def report_view(request , **kwargs) :
     if request.POST :
         form = AddReport(request.POST)
         docs = Doctor.objects.all()
-        p_id = ord(kwargs['patient_id']) - 48
-        d_id = ord(kwargs['doc_id']) - 48
+        p_id = kwargs['patient_id']
+        d_id = kwargs['doc_id']
         d_name = ""
         for d in docs :
-            if d_id == d.doc_id :
+            if d_id == str(d.doc_id) :
                 d_name = d.doc_name
         p = Patient.objects.get(pk=p_id)
         template = 'rep_form.html'
         if form.is_valid() :
-            out_med = request.POST['premeds']
-            out_note = form.cleaned_data['notes']
+            out_med = request.POST.getlist('premeds')
+            print(request.POST)
+            out_days = request.POST.getlist('day')
+            out_dose = request.POST.getlist('dose')
+            out_scd = request.POST.getlist('befter')
+            out_m = request.POST.getlist('morning')
+            out_n = request.POST.getlist('midday')
+            out_ni = request.POST.getlist('night')
             r = Report()
-            r.med = out_med
+            r.med = ','.join(o for o in out_med)
             r.patient_no = p
-            r.notes = out_note
             r.doc = d_name
             r.save()
+            count = 0
+            for o in out_med :
+                pr = Presciption()
+                for i in meds :
+                    if o == i.medname :
+                        pr.med_id = i
+                print(out_scd[count])
+                pr.dosage = out_dose[count]
+                pr.pat_no = p
+                # if out_m:
+                #     pr.morn = True
+                # else :
+                #     pr.morn = False
+                # if out_n:
+                #     pr.noon = True
+                # else :
+                #     pr.noon = False
+                # if out_ni:
+                #     pr.nite = True
+                # else :
+                #     pr.nite = False
+                # out_m = form.process()
+                # out_n = form.cleaned_data['midday']
+                # out_ni = form.cleaned_data['night']
+                out_m = [o == 'on' for o in out_m]
+                pr.morn = out_m[count]
+                pr.noon = out_n[count]
+                pr.nite = out_ni[count]
+                pr.timing = out_scd[count]
+                pr.days = out_days[count]
+                pr.pres_id = r
+                pr.save()
+                count += 1
             return HttpResponseRedirect(reverse('patient_info' , kwargs={'patient_id' : p_id , 'doc_id' : d_id}))
     return render(request , template , context)
 
