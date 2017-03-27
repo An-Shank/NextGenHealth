@@ -1,16 +1,144 @@
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/sidebar.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <script type="text/javascript" src="/static/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'  type='text/css'>
+    <!-- <link rel="stylesheet" href="/static/sidebar.css"> -->
     <link rel="stylesheet" href="/static/animate.css">
+    <style>
+    .affix  {
+        top: 0;
+        width: 100%;
+        background-color: #000 !important;
+        transition: all ease-in-out 500ms;
+    }
+    .affix  #tag::before{
+      background-color: #fff !important;
+    }
+    .affix #tag:hover {
+      color: #fff !important;
+    }
+
+        .affix + .container-fluid {
+            padding-top: 70px;
+        }
+        #tag {
+          color: #fff;
+          position: relative;
+        }
+        #tag:hover {
+          color: #000;
+        }
+        #tag::before {
+          content: '';
+          display: block;
+          height: 5px;
+          background-color: #000;
+          position: absolute;
+          top: 43px;
+          width: 0%;
+          transition: all ease-in-out 500ms;
+        }
+        #tag:hover::before {
+          width: 80%;
+        }
+    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #fff;
+ }
+ .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+background-color: #aaa;
+color: #000;
+}
+ #displayed
+ {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+ }
+#info {
+   background: -webkit-linear-gradient(left top, green, cyan);
+   background: -o-linear-gradient(left top, green, cyan);
+   background: -moz-linear-gradient(left top, green, cyan);
+   background: linear-gradient(left top, green, cyan);
+}
+#nav {
+  background-color: inherit;
+}
+#addbtn {
+  background-color: green;
+  color: white;
+  padding: 8px 15px;
+  text-align: center;
+  border-radius: 40px;
+  border: 2px solid green;
+  font-size: 12px;
+  text-decoration: none;
+}
+#addbtn:hover {
+  background-color: transparent;
+  border: 2px solid white;
+  transition: .5s cubic-bezier(.23,1,.32,1),color .5s cubic-bezier(.23,1,.32,1);
+}
+    </style>
+    <script type="text/javascript">
+    function openTab(tabName) {
+        var i;
+        var x = document.getElementsByClassName("tab");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(tabName).style.display = "block";
+        if(tabName == "Home"){
+          document.getElementById("Profile").style.display = "block";
+        }
+    }
+    </script>
+    <script type="text/javascript">
+    $(function() {
+    $('#nav-wrapper').height($("#nav").height());
+
+    $('#nav').affix({
+        offset: { top: $('#nav').offset().top }
+    });
+});
+</script>
 </head>
-<body style="background:url(/../media/images/background/medicines.jpg)no-repeat;background-size:100% 100%;">
-    <div id="wrapper">
-      <div id="sidebar-wrapper" class="animated slideInLeft">
+<body style="background-color:#999;font-family: Ubuntu;font-size:18px;" id="info">
+  <div class="container-fluid" id="title">
+  <div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#fff;margin-top:0;">
+    <a href="../.." style="text-decoration:none;color:#fff;font-family:Lobster;">NextGenHealth</a>
+  </div>
+</div>
+  <div id="nav-wrapper">
+  <nav id="nav" class="navbar navbar-default" data-spy="affix" data-offset-top="70" style="border:none;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav" style="color:#fff;">
+          <li id="hm"><a href=".." id="tag"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" style="color:#000;">
+        <li><a href="../../logout" id="tag"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+</div>
+    <div class="container-fluid" style="text-align:center;color:#fff;">
             <h2>Patient Info</h2>
             {% for p in p_info %}
             {% if p.p_id|slugify == patient_id %}
-              <ul class="sidebar-nav">
-                <li><img src="/../media/{{p.p_image}}" alt="{{p.p_image}}" class="img-circle img-responsive" height="100" width="100" align="middle" id="displayed"/></li>
+              <ul style="list-style:none;">
+                <li><img src="/../media/{{p.p_image}}" alt="{{p.p_image}}" class="img-circle img-responsive" height="100" width="100"  id="displayed"/></li>
                 <li>Patient ID : {{patient_id}} <li>
                 <li>Name : {{p.p_name}} </li>
                 <li>Age : {{p.p_age}} </li>
@@ -24,56 +152,71 @@
             {%endif%}
             {%endfor%}
       </div>
-    <div class="page-content-wrapper">
-        <div class="container-fluid" id="report-table">
-            <h2>Patient Report</h2>
-
-
-            <table class="table table-striped">
+        <div class="container-fluid" id="report-table" style="text-align:center;">
+            <h2 style="color:#000;">Patient Report</h2>
+            <table class="table table-striped" style="color:#131313;" id="tab">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Medicines</th>
-                        <th>Notes</th>
+                        <th>Days</th>
+                        <th>Dosage</th>
+                        <th>Timing</th>
+                        <th>Morning</th>
+                        <th>Noon</th>
+                        <th>Night</th>
+                        <th>Delivery</th>
                         <th>Doctor</th>
-                        <th>Quantity</th>
-                        <th>No.of Days</th>
-                        <th>Per day</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for r in reports %}
                         {% if patient_id == r.patient_no.p_id|slugify %}
                             <tr>
-                                <td>{{r.date}}</td>
+                              <td>{{r.date}}</td>
                                 <td>
                                 {% for m in r.medsplit %}
                                     {% for i in mreports %}
                                         {% if m|slugify == i.medname|slugify %}
-                                        <p>{{m}}</p>
+                                        <p><a href="../med/med_id={{i.med_no}}/">{{m}}</a></p>
                                         {%endif%}
                                     {%endfor%}
                                 {%endfor%}
+                              </td>   <td>             {% for p in result %}
+                                          {% if p.pres_id == r %}
 
-            </td>
-                                <td>{{r.notes}}</td>
-                                <td>{{r.doc}}</td>
-            {% for d in result %}
+                            <p>{{p.days}}</p>{% endif %}
+                            {% endfor %}</td>
+                            <td>{% for p in result %}
+                                        {% if p.pres_id == r %}<p>{{p.dosage}}</p>{% endif %}
+                                        {% endfor %}</td>
+                                        <td>{% for p in result %}
+                                                    {% if p.pres_id == r %}<p>{{p.timing}}</p>{% endif %}
+                                                    {% endfor %}</td>
+                                        <td>{% for p in result %}
+                                        {% if p.pres_id == r %}<p style="text-align:center;color:{% if p.morn == True %}green{% else %}red{% endif %}"><span class="glyphicon {% if p.morn == True %}glyphicon-ok{% else %}glyphicon-remove{% endif %}"></span></p>{% endif %}
+                                        {% endfor %}</td>
+                                        <td>{% for p in result %}
+                                                    {% if p.pres_id == r %}<p style="text-align:center;"><span class="glyphicon {% if p.noon == True %}glyphicon-ok{% else %}glyphicon-remove{% endif %}"></span></p>{% endif %}
+                                                    {% endfor %}</td>
+                                                    <td>{% for p in result %}
+                                                                {% if p.pres_id == r %}<p style="text-align:center;"><span class="glyphicon {% if p.nite == True %}glyphicon-ok{% else %}glyphicon-remove{% endif %}"></span></p>{% endif %}
+                                                                {% endfor %}</td>
+                                  <td>
+                                    {% for h in phar %}
+                                    {% if ph_id == h.ph_id|slugify %}
 
-                    <td> {{d.quantity}} </td>
-                    <td> {{d.days}} </td>
-                    <td> {{d.per_day}} </td>
-
-
+                                    <form method="POST" action=".">
+                                      <input type="checkbox" name="deliver" />
+                                    </form>
+                                    {% endif %}
+                                    {% endfor %}
+                                  </td>
+                            <td>{{r.doc}}</td>
                             </tr>
-
-                {%endfor%}
                         {% endif %}
                     {% endfor %}
-
                 </tbody>
             </table>
         </div>
-      </div>
-    </div>
 </body>

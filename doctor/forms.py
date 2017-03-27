@@ -25,23 +25,6 @@ class DocLogin(forms.Form) :
     username = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Username'}))
     password = forms.CharField(label = 'Password' , max_length = 50 , widget = forms.PasswordInput(attrs={'class' : 'form-control' , 'placeholder' : 'Password'}))
 
-    # def clean(self) :
-    #     cleaned_data = super(DocLogin , self).clean()
-    #     out_id = cleaned_data['username']
-    #     out_pass = cleaned_data['password']
-    #     docs = Doctor.objects.all()
-    #     valid = False
-    #     authorize = False
-    #     for d in docs :
-    #         if d.doc_id == out_id :
-    #             valid = True
-    #             if d.doc_pass == out_pass :
-    #                 authorize = True
-    #             break
-    #     if valid == False :
-    #         raise forms.ValidationError('This ID does not exist')
-    #     elif authorize == False :
-    #         raise forms.ValidationError('Incorrect Password')
 def calculate_days() :
     out = []
     for i in range(1,31) :
@@ -66,6 +49,4 @@ class AddReport(forms.Form) :
     dose = forms.ChoiceField(choices = calculate_dose() , widget = forms.Select(attrs={'class' : 'form-control'}))
     # day = forms.IntegerField(label="" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Days'}))
     day = forms.ChoiceField(choices = calculate_days() , widget = forms.Select(attrs={'class' : 'form-control'}))
-    attach = forms.ImageField(required = False , widget = forms.ClearableFileInput(attrs={'class' : 'btn btn-default'}))
-    # times = forms.TypedMultipleChoiceField(empty_value="Fase" , choices = [('mo' , 'Morning') , ('noo' , 'Noon') , ('ni' , 'Night')] , widget = forms.CheckboxSelectMultiple)
-    # times = forms.MultipleChoiceField(choices = [('m' , 'Morning') , ('no' , 'Noon') , ('n' , 'Night')] , widget = forms.CheckboxSelectMultiple(attrs={'type' : 'hidden' , 'name' : 'times'}))
+    attach = forms.ImageField(required = False)
