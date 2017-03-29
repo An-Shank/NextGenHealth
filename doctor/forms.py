@@ -24,6 +24,7 @@ class SubmitPID(forms.Form) :
 class DocLogin(forms.Form) :
     username = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Username'}))
     password = forms.CharField(label = 'Password' , max_length = 50 , widget = forms.PasswordInput(attrs={'class' : 'form-control' , 'placeholder' : 'Password'}))
+    aadharno = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Aadhar No'}))
 
 def calculate_days() :
     out = []
@@ -50,3 +51,15 @@ class AddReport(forms.Form) :
     # day = forms.IntegerField(label="" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Days'}))
     day = forms.ChoiceField(choices = calculate_days() , widget = forms.Select(attrs={'class' : 'form-control'}))
     attach = forms.ImageField(required = False)
+
+class DocSignUp(forms.Form) :
+    duser = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Username'}))
+    dpass1 = forms.CharField(label = 'Password' , max_length = 50 , widget = forms.PasswordInput(attrs={'class' : 'form-control' , 'placeholder' : 'Password'}))
+    dpass2 = forms.CharField(label = 'Password' , max_length = 50 , widget = forms.PasswordInput(attrs={'class' : 'form-control' , 'placeholder' : 'Password'}))
+    aadharno = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Aadhar No'}))
+    dmail = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Email'}))
+    dname = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Name'}))
+    dimage = forms.ImageField(required = True)
+    dsx = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Sex'}))
+    daddr = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Address'}))
+    dphone = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Contact No'}))

@@ -4,16 +4,51 @@
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/static/animate.css">
+<style>
+body{
+  background: -webkit-linear-gradient(left top, cyan, white);
+  background: -o-linear-gradient(left top, cyan, white);
+  background: -moz-linear-gradient(left top, cyan, white);
+  background: linear-gradient(left top, cyan, white);
+}
+#bar {
+  border: none;
+}
+.tab {
+  padding: 10%;
+  border: none;
+  /*background-color: #fff;*/
+  background-color: rgba(0 , 0 , 0 , 0.8);
+}
+/*.form-control {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}*/
+#bar > li.active > a{
+  background-color: rgba(0 , 0 , 0 , 0.8);
+  border: none;
+  margin-bottom: 0;
+  color : #fff;
+}
+#bar > li > a{
+  border: none;
+  color : #000;
+}
+
+</style>
 </head>
 <body style="background-color:#999;font-family: Ubuntu;font-size:18px;color:#131313;">
 <div class="container">
-  <div class="row" style="text-align:center;">
-    <div class="col-sm-4 col-sm-offset-4" style="margin-top:15%;">
-    <h1>{{title}}</h1>
+<div class="col-sm-6 col-sm-offset-3" style="margin-top:15%;" id="formTab">
+  <ul class="nav nav-tabs" id="bar">
+    <li id="in" style="width:50%;text-align:center;" class="active"><a href="#" onclick="openTab('SignIn')">Sign In</a></li>
+    <li id="up" style="width:50%;text-align:center;"><a href="#" onclick="openTab('SignUp')">Sign Up</a></li>
+  </ul>
+  <div class="tab" style="text-align:center;" id="SignIn">
     <div class="{% if message != '' %} alert alert-danger {% endif %}">
       <strong>{{message}}</strong>
     </div>
-    <div >
+    <div>
       <form action="." method="POST">{% csrf_token %}
         <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
           <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -27,7 +62,38 @@
       </form>
     </div>
   </div>
+
+  <div class="tab" style="text-align:center;display:none;" id="SignUp">
+    <div >
+      <form action="." method="POST">{% csrf_token %}
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          {{form.aadharno}}
+        </div>
+          <input class="btn btn-primary" type="submit" value="Proceed">
+      </form>
+    </div>
   </div>
+  </div>
+
 </div>
 </body>
 </html>
+<script type="text/javascript">
+function openTab(tabName) {
+    var i;
+    var x = document.getElementsByClassName("tab");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    document.getElementById(tabName).style.display = "block";
+    if (tabName == 'SignUp') {
+      document.getElementById('in').removeAttribute('class');
+      document.getElementById('up').setAttribute('class' , 'active');
+    }
+    else {
+      document.getElementById('up').removeAttribute('class');
+      document.getElementById('in').setAttribute('class' , 'active');
+    }
+}
+</script>

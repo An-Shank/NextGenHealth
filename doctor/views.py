@@ -4,11 +4,12 @@ from .models import Report , MedReport , Doctor , Prescription
 from patient.models import Patient
 from django.template import loader , RequestContext
 from django.views import View
-from .forms import SubmitPID , DocLogin , AddReport
+from .forms import SubmitPID , DocLogin , AddReport , DocSignUp
 from django import forms
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate , login , logout
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -29,23 +30,52 @@ def login_user(request) :
     if request.POST :
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username = username , password = password)
-        if user is not None :
-            if user.is_active :
-                for d in ds :
-                    if str(d.user) == username :
-                        success = 1
-                        break
-                if success == 1 :
-                    login(request , user)
-                    out = d.doc_id
-                    return HttpResponseRedirect(reverse('patient_index' , args=[out]))
-                else :
-                    context.update({'message' : 'User not Permitted'})
-            else :
-                context.update({'message' : 'User is disabled'})
+        aadharno = request.POST.get('aadharno')
+        if aadharno is not None :
+            return HttpResponseRedirect(reverse('doc_reg' , args=[aadharno]))
         else :
-            context.update({'message' : 'Invalid User'})
+            user = authenticate(username = username , password = password)
+            if user is not None :
+                if user.is_active :
+                    for d in ds :
+                        if str(d.user) == username :
+                            success = 1
+                            break
+                    if success == 1 :
+                        login(request , user)
+                        out = d.doc_id
+                        return HttpResponseRedirect(reverse('patient_index' , args=[out]))
+                    else :
+                        context.update({'message' : 'User not Permitted'})
+                else :
+                    context.update({'message' : 'User is disabled'})
+            else :
+                context.update({'message' : 'Invalid User'})
+    return render(request , template , context)
+
+def doc_signup(request , aadharno , **kwargs) :
+    form = DocSignUp()
+    template = 'doc_signup.html'
+    context = {'form' : form , 'message' : '' , 'aadharno' : aadharno}
+    if request.POST :
+        form = DocSignUp(request.POST)
+        doctor = Doctor.objects.all()
+        for d in doctor :
+            print(d.user)
+        duser = request.POST.get('duser')
+        dpass = request.POST.get('dpass1')
+        dmail = request.POST.get('dmail')
+        u = User.objects.create_user(username = duser , password = dpass , email = dmail)
+        d = Doctor()
+        d.doc_id = aadharno
+        d.user = u
+        d.doc_image = request.POST.get('dimage')
+        d.doc_name = request.POST.get('dname')
+        d.doc_sx = request.POST.get('dsx')
+        d.doc_addr = request.POST.get('daddr')
+        d.doc_phone = request.POST.get('dphone')
+        d.save()
+        return HttpResponseRedirect(reverse('doctor_index'))
     return render(request , template , context)
 
 @login_required(login_url = '/doctor/')
