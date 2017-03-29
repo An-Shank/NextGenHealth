@@ -125,7 +125,7 @@ def infos(request , patient_id , ph_id, **kwargs) :
     result = Prescription.objects.all()
     phar = PHARMACY.objects.all()
     template = loader.get_template('infos.html')
-    context = {'reports' : reports , 'patient_id' : patient_id ,'ph_id' : ph_id , 'mreports' : mreports , 'p_info' : p_info,'result':result , 'phar' : phar}
+    context = {'reports' : reversed(reports) , 'patient_id' : patient_id ,'ph_id' : ph_id , 'mreports' : mreports , 'p_info' : p_info,'result':result , 'phar' : phar}
     try:
         pid = Report.objects.filter(patient_no=patient_id)
     except Report.DoesNotExist:
