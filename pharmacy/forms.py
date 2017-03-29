@@ -12,6 +12,7 @@ from django.core.exceptions import NON_FIELD_ERRORS
 class SubmitPID(forms.Form) :
     pid = forms.IntegerField(label="" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Patient ID'}))
 
+    
 class PharLogin(forms.Form) :
     username = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Username'}))
     password = forms.CharField(label = 'Password' , max_length = 50 , widget = forms.PasswordInput(attrs={'class' : 'form-control' , 'placeholder' : 'Password'}))

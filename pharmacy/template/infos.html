@@ -197,17 +197,17 @@ color: #000;
                                         {% if p.pres_id == r %}<p style="text-align:center;color:{% if p.morn == True %}green{% else %}red{% endif %}"><span class="glyphicon {% if p.morn == True %}glyphicon-ok{% else %}glyphicon-remove{% endif %}"></span></p>{% endif %}
                                         {% endfor %}</td>
                                         <td>{% for p in result %}
-                                                    {% if p.pres_id == r %}<p style="text-align:center;"><span class="glyphicon {% if p.noon == True %}glyphicon-ok{% else %}glyphicon-remove{% endif %}"></span></p>{% endif %}
+                                                    {% if p.pres_id == r %}<p style="text-align:center;color:{% if p.noon == True %}green{% else %}red{% endif %}"><span class="glyphicon {% if p.noon == True %}glyphicon-ok{% else %}glyphicon-remove{% endif %}"></span></p>{% endif %}
                                                     {% endfor %}</td>
                                                     <td>{% for p in result %}
-                                                                {% if p.pres_id == r %}<p style="text-align:center;"><span class="glyphicon {% if p.nite == True %}glyphicon-ok{% else %}glyphicon-remove{% endif %}"></span></p>{% endif %}
+                                                        {% if p.pres_id == r %}<p style="text-align:center;color:{% if p.nite == True %}green{% else %}red{% endif %}"><span class="glyphicon {% if p.nite == True %}glyphicon-ok{% else %}glyphicon-remove{% endif %}"></span></p>{% endif %}
                                                                 {% endfor %}</td>
                                   <td>
                                     {% for h in phar %}
                                     {% if ph_id == h.ph_id|slugify %}
 
-                                    <form method="POST" action=".">
-                                      <input type="checkbox" name="deliver" />
+                                    <form method="POST" action="." name=" Delivery">
+                                      <input type="checkbox" name =" checkbox2" onclick="change()" />
                                     </form>
                                     {% endif %}
                                     {% endfor %}
@@ -220,3 +220,14 @@ color: #000;
             </table>
         </div>
 </body>
+<script type="text/javascript">
+function change()
+{
+  
+     if(document.Delivery.checkbox2.checked == true)
+       {
+        alert("worked");
+       }
+  
+}
+</script>
