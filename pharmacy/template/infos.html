@@ -178,7 +178,7 @@ color: #000;
                                 {% for m in r.medsplit %}
                                     {% for i in mreports %}
                                         {% if m|slugify == i.medname|slugify %}
-                                        <p><a href="../med/med_id={{i.med_no}}/">{{m}}</a></p>
+                                        <p> {{m}}</p>
                                         {%endif%}
                                     {%endfor%}
                                 {%endfor%}
