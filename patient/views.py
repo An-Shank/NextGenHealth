@@ -5,10 +5,11 @@ from .models import Patient
 from django.template import loader , RequestContext
 from django.views import View
 from django import forms
-from .forms import PatLogin
+from .forms import PatLogin , PatSignUp
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate , login , logout
+from django.contrib.auth.models import User
 # Create your views here.
 
 def mainpage(request) :
@@ -31,6 +32,9 @@ def login_patuser(request) :
     if request.POST :
         username = request.POST.get('username')
         password = request.POST.get('password')
+        aadharno = request.POST.get('aadharno')
+        if aadharno is not None :
+            return HttpResponseRedirect(reverse('pat_reg' , args=[aadharno]))
         user = authenticate(username = username , password = password)
         if user is not None :
             if user.is_active :
@@ -48,6 +52,33 @@ def login_patuser(request) :
                 context.update({'message' : 'User is disabled'})
         else :
             context.update({'message' : 'Invalid User'})
+    return render(request , template , context)
+
+def pat_signup(request , aadharno , **kwargs) :
+    form = PatSignUp()
+    template = 'pat_signup.html'
+    context = {'form' : form , 'message' : '' , 'aadharno' : aadharno}
+    if request.POST :
+        form = PatSignUp(request.POST)
+        patient = Patient.objects.all()
+        puser = request.POST.get('puser')
+        ppass = request.POST.get('ppass1')
+        pmail = request.POST.get('pmail')
+        u = User.objects.create_user(username = puser , password = ppass , email = pmail)
+        p = Patient()
+        p.p_id = aadharno
+        p.user = u
+        p.p_image = request.POST.get('pimage')
+        p.p_name = request.POST.get('pname')
+        p.p_age = request.POST.get('page')
+        p.p_sx = request.POST.get('psx')
+        p.p_addr = request.POST.get('paddr')
+        p.p_contact = request.POST.get('pphone')
+        p.p_NoK = request.POST.get('pnok')
+        p.p_blood = request.POST.get('pblood')
+        p.p_allerg = request.POST.get('pallerg')
+        p.save()
+        return HttpResponseRedirect(reverse('patient_index'))
     return render(request , template , context)
 
 @login_required(login_url = '/patient/')

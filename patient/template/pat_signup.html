@@ -1,0 +1,126 @@
+<html>
+</head>
+<!-- <body style="background:url(/../media/images/background/doctor.jpg)no-repeat;background-size:100% 100%;"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+<link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/animate.css">
+<style>
+body{
+  background: -webkit-linear-gradient(left top, silver, black);
+  background: -o-linear-gradient(left top, silver, black);
+  background: -moz-linear-gradient(left top, silver, black);
+  background: linear-gradient(left top, silver, black);
+}
+#bar {
+  border: none;
+}
+.tab {
+  padding: 10%;
+  border: none;
+  /*background-color: #fff;*/
+  background-color: rgba(0 , 0 , 0 , 0.8);
+}
+/*.form-control {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}*/
+#bar > li.active > a{
+  background-color: rgba(0 , 0 , 0 , 0.8);
+  border: none;
+  margin-bottom: 0;
+  color : #fff;
+}
+#bar > li > a{
+  border: none;
+  color : #000;
+}
+</style>
+</head>
+<body style="background-color:#999;font-family: Ubuntu;font-size:18px;color:#131313;">
+<div class="container">
+  <div style="text-align:center;">
+  <h1> Patient Registration </h1>
+</div>
+    <div style="text-align:center;" class="col-sm-6 col-sm-offset-3">
+      <form action="." method="POST">{% csrf_token %}
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Aadhar No</i></span>
+          <input class="form-control" id="id_aadharno" name="aadharno" placeholder="Aadhar No" value={{aadharno}} type="text" readonly="True">
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Username</i></span>
+          {{form.puser}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Password</i></span>
+          {{form.ppass1}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Confirm Password</i></span>
+          {{form.ppass2}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Email</i></span>
+          {{form.pmail}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Name</i></span>
+          {{form.pname}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Image</i></span>
+          {{form.pimage}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %} col-sm-4 col-sm-offset-0">
+          <span class="input-group-addon"><i>Age</i></span>
+          {{form.page}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %} col-sm-4 col-sm-offset-0">
+          <span class="input-group-addon"><i>Sex</i></span>
+          {{form.psx}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Address</i></span>
+          {{form.paddr}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Phone</i></span>
+          {{form.pphone}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Blood</i></span>
+          {{form.pblood}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>NoK</i></span>
+          {{form.pnok}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Allergies</i></span>
+          {{form.pallerg}}
+        </div>
+          <input class="btn btn-primary" type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
+<script type="text/javascript">
+function openTab(tabName) {
+    var i;
+    var x = document.getElementsByClassName("tab");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    document.getElementById(tabName).style.display = "block";
+    if (tabName == 'SignUp') {
+      document.getElementById('in').removeAttribute('class');
+      document.getElementById('up').setAttribute('class' , 'active');
+    }
+    else {
+      document.getElementById('up').removeAttribute('class');
+      document.getElementById('in').setAttribute('class' , 'active');
+    }
+}
+</script>

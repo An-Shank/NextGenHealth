@@ -34,17 +34,76 @@ body{
   border: none;
   color : #000;
 }
+.affix {
+    top: 0;
+    width: 100%;
+    background-color: #000 !important;
+    transition: all ease-in-out 500ms;
+}
+.affix  #tag::before{
+  background-color: #fff !important;
+}
+.affix #tag:hover {
+  color: #fff !important;
+}
+    .affix + .container-fluid {
+        padding-top: 50px;
+    }
+    #tag {
+      color: #fff;
+      position: relative;
+    }
+    #tag:hover {
+      color: #000;
+    }
+    #tag::before {
+      content: '';
+      display: block;
+      height: 5px;
+      position: absolute;
+      background-color: #000;
+      top: 43px;
+      width: 0%;
+      transition: all ease-in-out 500ms;
+    }
+    #tag:hover::before {
+      width: 80%;
+    }
+    #tag::after {
+      color: #000;
+    }
+   #nav {
+     background-color: rgba(0 , 0 , 0 , 0.2);
+   }
 
 </style>
 <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'  type='text/css'>
-<div class="container-fluid" id="title">
-<div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#fff;margin-top:0;">
-  <a href=".." style="text-decoration:none;color:#fff;font-family:Lobster;">NextGenHealth</a>
-</div>
-</div>
 </head>
 <body style="background-color:#999;font-family: Ubuntu;font-size:18px;color:#131313;">
+  <div class="container-fluid" id="title">
+  <div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#fff;margin-top:0;">
+    <a href=".." style="text-decoration:none;color:#fff;font-family:Lobster;">NextGenHealth</a>
+  </div>
+</div>
+<div id="nav-wrapper">
+  <nav id="nav" class="navbar navbar-default" data-spy="affix" data-offset-top="50" style="border:none;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav" style="color:#fff;">
+        <li id="hm"><a href=".." id="tag"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+      </ul>
+    </div>
+    </div>
+  </nav>
 <div class="container">
 <div class="col-sm-6 col-sm-offset-3 animated fadeIn" style="margin-top:15%;" id="formTab">
   <ul class="nav nav-tabs" id="bar">
