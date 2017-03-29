@@ -206,8 +206,8 @@ color: #000;
                                     {% for h in phar %}
                                     {% if ph_id == h.ph_id|slugify %}
 
-                                    <form method="POST" action=".">
-                                      <input type="checkbox" name="deliver" />
+                                    <form method="POST" action="." name=" Delivery">
+                                      <input type="checkbox" name =" checkbox2" onclick="change()" />
                                     </form>
                                     {% endif %}
                                     {% endfor %}
@@ -220,3 +220,14 @@ color: #000;
             </table>
         </div>
 </body>
+<script type="text/javascript">
+function change()
+{
+  
+     if(document.Delivery.checkbox2.checked == true)
+       {
+        alert("worked");
+       }
+  
+}
+</script>

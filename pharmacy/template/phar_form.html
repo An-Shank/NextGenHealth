@@ -8,21 +8,31 @@
             $("body").fadeIn(2000);
     });
 </script> -->
-  <link rel="stylesheet" href="/static/animate.css">
+ </style>
+
+       
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'  type='text/css'>
+  <div class="container-fluid" id="title">
+  <div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#fff;margin-top:0;">
+    <a href=".." style="text-decoration:none;color:#fff;font-family:Lobster;">NextGenHealth</a>
+  </div>
+</div>
+      <link rel="stylesheet" href="/static/animate.css">
   <nav class="navbar navbar-inverse animated slideInDown">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">NextGenHealth</a>
       </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">History</a></li>
-        <li><a href="#">Statistics</a></li>
+       </li>
+       
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-left">
         {% for d in doc %}
         {% if d.ph_id|slugify == did %}
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{d.ph_name}}</a></li>
+        <li><a><span class="glyphicon glyphicon-user"></span> {{d.ph_name}}</a></li>
+        </ul>
+          <ul class="nav navbar-nav navbar-right">
         <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         {% endif %}
         {% endfor %}
