@@ -202,16 +202,18 @@ color: #000;
                                                     <td>{% for p in result %}
                                                         {% if p.pres_id == r %}<p style="text-align:center;color:{% if p.nite == True %}green{% else %}red{% endif %}"><span class="glyphicon {% if p.nite == True %}glyphicon-ok{% else %}glyphicon-remove{% endif %}"></span></p>{% endif %}
                                                                 {% endfor %}</td>
-                                  <td>
+                                   <td>
                                     {% for h in phar %}
                                     {% if ph_id == h.ph_id|slugify %}
 
                                     <form method="POST" action="." name=" Delivery">
-                                      <input type="checkbox" name =" checkbox2" onclick="change()" />
+                                      <input type="checkbox" id="checkbox_id_{{h.ph_id}}"   name ="Delivery" onclick="change('{{h.ph_id}}')" >
+                                      <p id='phar_{{h.ph_id}}' style="display: none">{{h.ph_name}}</p>
                                     </form>
                                     {% endif %}
                                     {% endfor %}
                                   </td>
+
                             <td>{{r.doc}}</td>
                             </tr>
                         {% endif %}
@@ -221,13 +223,10 @@ color: #000;
         </div>
 </body>
 <script type="text/javascript">
-function change()
+function change(id_num)
 {
   
-     if(document.Delivery.checkbox2.checked == true)
-       {
-        alert("worked");
-       }
-  
+     document.getElementById('checkbox_id_'+id_num).setAttribute("style","display:none");
+     document.getElementById('phar_'+id_num).setAttribute("style","display:inline-block");
 }
 </script>
