@@ -22,7 +22,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pharmacy/' , include('pharmacy.urls')) ,
     url(r'^doctor/' , include('doctor.urls')) ,
-    url(r'^patient/' , include('patient.urls')) ,
+    url(r'^' , include('patient.urls')) ,
+    # url(r'^$/' , include('main.urls'))
 ]
 
 if settings.DEBUG is True:
