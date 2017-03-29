@@ -60,6 +60,6 @@ class DocSignUp(forms.Form) :
     dmail = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Email'}))
     dname = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Name'}))
     dimage = forms.ImageField(required = True)
-    dsx = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Sex'}))
-    daddr = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Address'}))
+    dsx = forms.ChoiceField(choices = [('Male' , 'Male') , ('Female' , 'Female')] , widget = forms.Select(attrs={'class' : 'form-control'}))
+    daddr = forms.CharField(label = "" , widget = forms.Textarea(attrs={'class' : 'form-control'}))
     dphone = forms.CharField(label = "" , widget = forms.TextInput(attrs={'class' : 'form-control' , 'placeholder' : 'Contact No'}))

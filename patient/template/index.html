@@ -1,0 +1,296 @@
+<html>
+<head>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+  <script type="text/javascript" src="/static/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/animate.css">
+<style>
+        .affix {
+            top: 0;
+            width: 100%;
+            position: fixed;
+            background-color: #000 !important;
+            transition: all ease-in-out 500ms;
+        }
+        .affix  #tag::before{
+          background-color: #fff !important;
+        }
+        .affix #tag:hover {
+          color: #fff !important;
+        }
+            .affix + .container-fluid {
+                padding-top: 70px;
+
+            }
+            #tag {
+              color: #fff;
+              position: relative;
+            }
+            #tag:hover {
+              color: #000;
+            }
+            #tag::before {
+              content: '';
+              display: block;
+              height: 5px;
+              background-color: #000;
+              position: absolute;
+              top: 43px;
+              width: 0%;
+              transition: all ease-in-out 500ms;
+            }
+            #tag:hover::before {
+              width: 80%;
+            }
+            #tag::after {
+              color: #000;
+            }
+            .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+           background-color: #aaa;
+           color: #000;
+        }
+        .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+       background-color: #fff;
+       color: #000;
+    }
+        .carousel {
+          position: relative;
+        }
+
+.carousel-inner img {
+  width: 100%;
+  margin: auto;
+  object-fit: cover;
+}
+.carousel-inner>.item {
+  height: calc(100% - 121px);
+  width: 100%;
+  z-index:-9;
+}
+
+@media (max-width: 600px) {
+  .carousel-caption {
+    display: none;
+  }
+}
+@media (max-width: 676px) {
+  .carousel {
+    z-index: -9;
+  }
+}
+body{
+  background: -webkit-linear-gradient(left top, red, blue);
+  background: -o-linear-gradient(left top, red, blue);
+  background: -moz-linear-gradient(left top, red, blue);
+  background: linear-gradient(left top, red, blue);
+}
+
+#nav {
+  background-color: rgba(0 , 0 , 0 , 0.2);
+}
+#subbtn {
+  background-color: #007dff;
+  padding: 8px 15px;
+  text-align: center;
+  border-radius: 40px;
+  border: 2px solid #007dff;
+  font-size: 12px;
+  text-decoration: none;
+}
+#subbtn:hover {
+  background-color: transparent;
+  border: 2px solid white;
+  transition: .5s cubic-bezier(.23,1,.32,1),color .5s cubic-bezier(.23,1,.32,1);
+}
+.modal-content {
+  background-color: rgba(0 , 0 , 0 , 0.8);
+}
+#pat {
+  transition-delay: 1000ms;
+}
+#phar {
+  transition-delay: 2000ms;
+}
+  </style>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'  type='text/css'>
+  <div class="container-fluid" id="title">
+  <div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#fff;margin-top:0;">
+    <a href=".." style="text-decoration:none;color:#fff;font-family:Lobster;">NextGenHealth</a>
+  </div>
+</div>
+<div id="nav-wrapper">
+  <nav id="nav" class="navbar navbar-default" data-spy="affix" data-offset-top="70" style="border:none;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav" style="color:#fff;">
+        <li id="hom"><a href="#" onclick="openTab('Home')" id="tag">Home</a></li>
+        <li id="log"><a href="#" onclick="openTab('Login')" data-toggle="modal" data-target="#Login" id="tag">Login</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" onclick="openTab('About')" id="tag">About Us</a></li>
+        <li><a href="#" onclick="openTab('Contact')" id="tag">Contact</a></li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+</div>
+  <div id="Contact" class="tab" style="display:none;margin-top:50px;">
+    <h3 class="text-center" style="font-size:24px;font-weight:bold;color:#fff;">Contact Us</h3>
+  </div>
+  <div id="About" class="tab" style="display:none;color:#fff;font-size:24px;">
+    <h3 class="text-center" style="font-size:24px;font-weight:bold;color:#fff;">About</h3>
+  </div>
+</div>
+</head>
+
+<body style="font-family: Ubuntu;font-size:18px;">
+  <div id="info">
+  <div class="tab" id="Home">
+    <div id="myCarousel" class="carousel slide img-responsive" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active" style="z-index:-9;">
+      <img src="../../media/images/background/index.jpg" alt="About">
+      <div class="carousel-caption">
+        <h3>About</h3>
+        <p>This provides a cloud based Patient Record tracking system.</p>
+      </div>
+    </div>
+    <div class="item">
+      <img src="../../media/images/background/doctor.jpg" alt="Doctor" >
+      <div class="carousel-caption">
+        <h3>For Doctor</h3>
+        <p>Doctors can access Patient Report and add New Reports.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../../media/images/background/patient.jpg" alt="Patient">
+      <div class="carousel-caption">
+        <h3>For Patient</h3>
+        <p>Patient can keep track of their reports whenever they want.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../../media/images/background/pharmacy.jpg" alt="Pharmacy">
+      <div class="carousel-caption">
+        <h3>For Pharmacy</h3>
+        <p>Pharmacies can view Patient Drug Details and Validate the Purchase.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+  </div>
+  <!-- <div id="Login" class="container-fluid" style="margin-top:15%;">
+    <div class="container col-sm-8 col-sm-offset-2" style="width:30%;background-color:#fff;">
+      <h1>Doctor</h1>
+    </div>
+    <div class="container col-sm-8 col-sm-offset-6" style="width:30%;background-color:#fff;">
+      <h1>Patient</h1>
+    </div>
+    <div class="container col-sm-8 col-sm-offset-8" style="width:30%;background-color:#fff;">
+      <h1>Pharmacy</h1>
+    </div>
+  </div> -->
+<!-- Modal -->
+<div id="Login" class="modal fade tab" role="dialog" style="margin-top:15%;width:100%;">
+  <div id="doc" class="modal-dialog col-sm-8 col-sm-offset-2 animated slideDown" style="width:33%;">
+    <div class="modal-content" style="color:#fff;">
+      <div class="modal-header" style="text-align:center;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Doctor</h4>
+      </div>
+      <div class="modal-body">
+        <h1>Doctor</h1>
+        <div class="modal-footer" style="text-align:center;">
+          <input id="subbtn" type="button" value="Login">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pat" class="modal-dialog col-sm-8 col-sm-offset-3" style="width:33%;">
+    <div class="modal-content" style="color:#fff;">
+      <div class="modal-header" style="text-align:center;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Patient</h4>
+      </div>
+      <div class="modal-body">
+        <h1>Patient</h1>
+        <div class="modal-footer" style="text-align:center;">
+          <input id="subbtn" type="button" value="Login">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="phar" class="modal-dialog col-sm-8 col-sm-offset-8" style="width:33%;">
+    <div class="modal-content" style="color:#fff;">
+      <div class="modal-header" style="text-align:center;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Pharmacy</h4>
+      </div>
+      <div class="modal-body">
+        <h1>Pharmacy</h1>
+        <div class="modal-footer" style="text-align:center;">
+          <input id="subbtn" type="button" value="Login">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+function openTab(tabName) {
+    var i;
+    var x = document.getElementsByClassName("tab");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    document.getElementById(tabName).style.display = "block";
+    if(tabName == "Login"){
+      document.getElementById("Home").style.display = "block";
+    }
+}
+</script>
+<script type="text/javascript">
+$(function() {
+    $('#nav-wrapper').height($("#nav").height());
+
+    $('#nav').affix({
+        offset: { top: $('#nav').offset().top }
+    });
+});
+</script>

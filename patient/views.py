@@ -11,6 +11,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate , login , logout
 # Create your views here.
 
+def mainpage(request) :
+    return render(request , 'index.html' , {})
+
 def login_patuser(request) :
     form = PatLogin()
     ps = Patient.objects.all()

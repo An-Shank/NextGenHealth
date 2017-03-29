@@ -6,10 +6,10 @@
 <link rel="stylesheet" href="/static/animate.css">
 <style>
 body{
-  background: -webkit-linear-gradient(left top, cyan, white);
-  background: -o-linear-gradient(left top, cyan, white);
-  background: -moz-linear-gradient(left top, cyan, white);
-  background: linear-gradient(left top, cyan, white);
+  background: -webkit-linear-gradient(left top, orange, white);
+  background: -o-linear-gradient(left top, orange, white);
+  background: -moz-linear-gradient(left top, orange, white);
+  background: linear-gradient(left top, orange, white);
 }
 #bar {
   border: none;
@@ -36,15 +36,22 @@ body{
 }
 
 </style>
+<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'  type='text/css'>
+<div class="container-fluid" id="title">
+<div class="page-header" style="height:50px;border:none;text-align:center;font-weight:bold;font-size:48px;color:#fff;margin-top:0;">
+  <a href=".." style="text-decoration:none;color:#fff;font-family:Lobster;">NextGenHealth</a>
+</div>
+</div>
 </head>
 <body style="background-color:#999;font-family: Ubuntu;font-size:18px;color:#131313;">
 <div class="container">
-<div class="col-sm-6 col-sm-offset-3" style="margin-top:15%;" id="formTab">
+<div class="col-sm-6 col-sm-offset-3 animated fadeIn" style="margin-top:15%;" id="formTab">
   <ul class="nav nav-tabs" id="bar">
     <li id="in" style="width:50%;text-align:center;" class="active"><a href="#" onclick="openTab('SignIn')">Sign In</a></li>
     <li id="up" style="width:50%;text-align:center;"><a href="#" onclick="openTab('SignUp')">Sign Up</a></li>
   </ul>
-  <div class="tab" style="text-align:center;" id="SignIn">
+  <div class="tab animated fadeIn" style="text-align:center;" id="SignIn">
     <div class="{% if message != '' %} alert alert-danger {% endif %}">
       <strong>{{message}}</strong>
     </div>
@@ -63,7 +70,7 @@ body{
     </div>
   </div>
 
-  <div class="tab" style="text-align:center;display:none;" id="SignUp">
+  <div class="tab animated fadeIn" style="text-align:center;display:none;" id="SignUp">
     <div >
       <form action="." method="POST">{% csrf_token %}
         <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
