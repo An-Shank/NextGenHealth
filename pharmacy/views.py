@@ -48,7 +48,7 @@ def phar_signup(request , aadharno , **kwargs) :
         d.ph_addr = request.POST.get('phaaddr')
         d.ph_phone = request.POST.get('phaphone')
         d.save()
-        return HttpResponseRedirect(reverse('phar_index'))
+        return HttpResponseRedirect(reverse('pharmacy_index'))
     return render(request , template , context)
 
 

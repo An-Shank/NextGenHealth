@@ -107,10 +107,24 @@ body{
   background-color: rgba(0 , 0 , 0 , 0.8);
 }
 #pat {
-  transition-delay: 1000ms;
+  transition-duration: 500ms;
 }
 #phar {
-  transition-delay: 2000ms;
+  transition-duration: 1000ms;
+}
+#subbtn {
+  background-color: #007dff;
+  padding: 8px 30px;
+  text-align: center;
+  border-radius: 40px;
+  border: 2px solid #007dff;
+  font-size: 15px;
+  text-decoration: none;
+}
+#subbtn:hover {
+  background-color: transparent;
+  border: 2px solid white;
+  transition: .5s cubic-bezier(.23,1,.32,1),color .5s cubic-bezier(.23,1,.32,1);
 }
   </style>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
@@ -144,10 +158,10 @@ body{
     </div>
   </nav>
 </div>
-  <div id="Contact" class="tab" style="display:none;margin-top:50px;">
+  <div id="Contact" class="tab" style="display:none;">
     <h3 class="text-center" style="font-size:24px;font-weight:bold;color:#fff;">Contact Us</h3>
   </div>
-  <div id="About" class="tab" style="display:none;color:#fff;font-size:24px;">
+  <div id="About" class="tab" style="display:none;">
     <h3 class="text-center" style="font-size:24px;font-weight:bold;color:#fff;">About</h3>
   </div>
 </div>
@@ -222,7 +236,7 @@ body{
     </div>
   </div> -->
 <!-- Modal -->
-<div id="Login" class="modal fade tab" role="dialog" style="margin-top:15%;width:100%;">
+<div id="Login" class="modal fade tab" role="dialog" style="margin-top:14%;width:100%;">
   <div id="doc" class="modal-dialog col-sm-8 col-sm-offset-2 animated slideDown" style="width:33%;">
     <div class="modal-content" style="color:#fff;">
       <div class="modal-header" style="text-align:center;">
@@ -230,9 +244,9 @@ body{
         <h4 class="modal-title">Doctor</h4>
       </div>
       <div class="modal-body">
-        <h1>Doctor</h1>
+        <img src="../../media/images/background/doctor.png" class="center-block img-responsive" alt="Doctor">
         <div class="modal-footer" style="text-align:center;">
-          <input id="subbtn" type="button" value="Login">
+            <a href="./doctor/" id="subbtn" style="color:#fff;">Login</a>
         </div>
       </div>
     </div>
@@ -245,9 +259,9 @@ body{
         <h4 class="modal-title">Patient</h4>
       </div>
       <div class="modal-body">
-        <h1>Patient</h1>
+        <img src="../../media/images/background/patient.png" class="center-block img-responsive" alt="Patient">
         <div class="modal-footer" style="text-align:center;">
-          <input id="subbtn" type="button" value="Login">
+            <a href="./patient/" id="subbtn" style="color:#fff;">Login</a>
         </div>
       </div>
     </div>
@@ -260,9 +274,9 @@ body{
         <h4 class="modal-title">Pharmacy</h4>
       </div>
       <div class="modal-body">
-        <h1>Pharmacy</h1>
+        <img src="../../media/images/background/pharmacy.png" class="center-block img-responsive" alt="Pharmacy">
         <div class="modal-footer" style="text-align:center;">
-          <input id="subbtn" type="button" value="Login">
+            <a href="./pharmacy/" id="subbtn" style="color:#fff;">Login</a>
         </div>
       </div>
     </div>
