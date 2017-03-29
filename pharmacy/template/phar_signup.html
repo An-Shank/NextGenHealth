@@ -6,10 +6,10 @@
 <link rel="stylesheet" href="/static/animate.css">
 <style>
 body{
-  background: -webkit-linear-gradient(left top, cyan, white);
-  background: -o-linear-gradient(left top, cyan, white);
-  background: -moz-linear-gradient(left top, cyan, white);
-  background: linear-gradient(left top, cyan, white);
+  background: -webkit-linear-gradient(left top, silver, black);
+  background: -o-linear-gradient(left top, silver, black);
+  background: -moz-linear-gradient(left top, silver, black);
+  background: linear-gradient(left top, silver, black);
 }
 #bar {
   border: none;
@@ -39,44 +39,48 @@ body{
 </head>
 <body style="background-color:#999;font-family: Ubuntu;font-size:18px;color:#131313;">
 <div class="container">
-<div class="col-sm-6 col-sm-offset-3" style="margin-top:15%;" id="formTab">
-  <ul class="nav nav-tabs" id="bar">
-    <li id="in" style="width:50%;text-align:center;" class="active"><a href="#" onclick="openTab('SignIn')">Sign In</a></li>
-    <li id="up" style="width:50%;text-align:center;"><a href="#" onclick="openTab('SignUp')">Sign Up</a></li>
-  </ul>
-  <div class="tab" style="text-align:center;" id="SignIn">
-    <div class="{% if message != '' %} alert alert-danger {% endif %}">
-      <strong>{{message}}</strong>
-    </div>
-    <div>
+  <div style="text-align:center;">
+  <h1> Pharmacy Registration </h1>
+</div>
+    <div style="text-align:center;">
       <form action="." method="POST">{% csrf_token %}
         <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-          {{form.username}}
+          <span class="input-group-addon"><i>Aadhar No</i></span>
+          <input class="form-control" id="id_aadharno" name="aadharno" placeholder="Aadhar No" value={{aadharno}} type="text" readonly="True">
         </div>
         <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-          {{form.password}}
+          <span class="input-group-addon"><i>Username</i></span>
+          {{form.phauser}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Password</i></span>
+          {{form.phapass1}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Password Again</i></span>
+          {{form.phapass2}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Email</i></span>
+          {{form.phamail}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Name</i></span>
+          {{form.phaname}}
+        </div>   
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Address</i></span>
+          {{form.phaaddr}}
+        </div>
+        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
+          <span class="input-group-addon"><i>Phone</i></span>
+          {{form.phaphone}}
         </div>
           <input class="btn btn-primary" type="submit" value="Submit">
       </form>
     </div>
   </div>
 
-  <div class="tab" style="text-align:center;display:none;" id="SignUp">
-    <div >
-      <form action="." method="POST">{% csrf_token %}
-        <div class="input-group form-group {% if message != '' %}has-error{% endif %}">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-          {{form.aadharno}}
-        </div>
-          <input class="btn btn-primary" type="submit" value="Proceed">
-      </form>
-    </div>
-  </div>
-  </div>
-
-</div>
 </body>
 </html>
 <script type="text/javascript">

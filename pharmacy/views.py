@@ -6,12 +6,13 @@ from .models import PHARMACY
 from doctor.models import Patient,Report,MedReport
 from django.template import loader , RequestContext
 from django.views import View
-from .forms import SubmitPID , PharLogin
+from .forms import SubmitPID , PharLogin ,PharSignUp
 from django import forms
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate , login , logout
 from doctor.models import Report,Prescription
+from django.contrib.auth.models import User
 #from .models import PHARMACY
 
 #def SRRes(request):
@@ -26,6 +27,34 @@ from doctor.models import Report,Prescription
 #		#return HttpResponse("Invalid ID")
 #		return render(request,'phar.html',{'message': "Doesn't exists"})
 #	return render(request , 'phar.html' , {})
+
+def phar_signup(request , aadharno , **kwargs) :
+    form = PharSignUp()
+    template = 'phar_signup.html'
+    context = {'form' : form , 'message' : '' , 'aadharno' : aadharno}
+    if request.POST :
+        form = PharSignUp(request.POST)
+        pharmacy = PHARMACY.objects.all()
+        for d in pharmacy:
+            print(d.user)
+        phauser = request.POST.get('phauser')
+        phapass = request.POST.get('phapass1')
+        phamail = request.POST.get('phamail')
+        u = User.objects.create_user(username = phauser , password = phapass , email = phamail)
+        d = PHARMACY()
+        d.ph_id = aadharno
+        d.user = u
+        d.ph_name = request.POST.get('phaname')
+        d.ph_addr = request.POST.get('phaaddr')
+        d.ph_phone = request.POST.get('phaphone')
+        d.save()
+        return HttpResponseRedirect(reverse('phar_index'))
+    return render(request , template , context)
+
+
+
+
+
 def login_pharuser(request) :
     form = PharLogin()
     ds = PHARMACY.objects.all()
@@ -44,23 +73,27 @@ def login_pharuser(request) :
     if request.POST :
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username = username , password = password)
-        if user is not None :
-            if user.is_active :
-                for d in ds :
-                    if str(d.user) == username :
-                        success = 1
-                        break
-                if success == 1 :
-                    login(request , user)
-                    out = d.ph_id
-                    return HttpResponseRedirect(reverse('pharpatient_index' , args=[out]))
+        aadharno = request.POST.get('aadharno')
+        if aadharno is not None :
+            return HttpResponseRedirect(reverse('phar_reg' , args=[aadharno]))
+        else:
+            user = authenticate(username = username , password = password)
+            if user is not None :
+                if user.is_active :
+                     for d in ds :
+                         if str(d.user) == username :
+                              success = 1
+                              break
+                     if success == 1 :
+                         login(request , user)
+                         out = d.ph_id
+                         return HttpResponseRedirect(reverse('pharpatient_index' , args=[out]))
+                     else :
+                       context.update({'message' : 'User not Permitted'})
                 else :
-                    context.update({'message' : 'User not Permitted'})
+                 context.update({'message' : 'User is disabled'})
             else :
-                context.update({'message' : 'User is disabled'})
-        else :
-            context.update({'message' : 'Invalid User'})
+             context.update({'message' : 'Invalid User'})
     return render(request , template , context)
 
 
@@ -69,8 +102,9 @@ def login_pharuser(request) :
 def pharpatient_view(request , **kwargs) :
     form = SubmitPID()
     template = 'phar_form.html'
+    report = Report.objects.all()
     pharmacy = PHARMACY.objects.all()
-    context = {'form' : form , 'title' : 'Patient Report' , 'doc' : pharmacy , 'did' : kwargs['ph_id']}
+    context = {'form' : form , 'title' : 'Patient Report' , 'doc' : pharmacy , 'did' : kwargs['ph_id'],'rep' : reversed(report) }
     if request.POST :
         form = SubmitPID(request.POST)
         report = Report.objects.all()
