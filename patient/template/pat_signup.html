@@ -34,6 +34,21 @@ body{
   border: none;
   color : #000;
 }
+#subbtn {
+  background-color: #007dff;
+  padding: 8px 30px;
+  text-align: center;
+  border-radius: 40px;
+  border: 2px solid #007dff;
+  font-size: 15px;
+  text-decoration: none;
+  color: #fff;
+}
+#subbtn:hover {
+  background-color: transparent;
+  border: 2px solid white;
+  transition: .5s cubic-bezier(.23,1,.32,1),color .5s cubic-bezier(.23,1,.32,1);
+}
 </style>
 </head>
 <body style="background-color:#999;font-family: Ubuntu;font-size:18px;color:#131313;">
@@ -99,7 +114,7 @@ body{
           <span class="input-group-addon"><i>Allergies</i></span>
           {{form.pallerg}}
         </div>
-          <input class="btn btn-primary" type="submit" value="Submit">
+          <input id="subbtn" type="submit" value="Submit">
       </form>
     </div>
   </div>

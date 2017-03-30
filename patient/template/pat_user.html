@@ -70,6 +70,21 @@
    #nav {
      background-color: rgba(0 , 0 , 0 , 0.2);
    }
+   #subbtn {
+     background-color: #007dff;
+     padding: 8px 30px;
+     text-align: center;
+     border-radius: 40px;
+     border: 2px solid #007dff;
+     font-size: 15px;
+     text-decoration: none;
+     color: #fff;
+   }
+   #subbtn:hover {
+     background-color: transparent;
+     border: 2px solid white;
+     transition: .5s cubic-bezier(.23,1,.32,1),color .5s cubic-bezier(.23,1,.32,1);
+   }
 </style>
 </head>
 <body style="background-color:#999;font-family: Ubuntu;font-size:18px;color:#131313;">
@@ -116,7 +131,7 @@
             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
             {{form.password}}
           </div>
-            <input class="btn btn-primary" type="submit" value="Submit">
+            <input id="subbtn" type="submit" value="Submit">
         </form>
       </div>
     </div>
@@ -128,7 +143,7 @@
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
             {{form.aadharno}}
           </div>
-            <input class="btn btn-primary" type="submit" value="Proceed">
+            <input id="subbtn" type="submit" value="Proceed">
         </form>
       </div>
     </div>

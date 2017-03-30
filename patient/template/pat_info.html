@@ -156,7 +156,7 @@ color: #000;
             {% for p in p_info %}
             {% if p.p_id|slugify == patient_id %}
               <ul style="list-style:none;">
-                <li><img src="/../media/{{p.p_image}}" alt="{{p.p_image}}" class="img-circle img-responsive" height="100" width="100"  id="displayed"/></li>
+                <li><img src="../../media/{{p.p_image}}" alt="{{p.p_image}}" class="img-circle img-responsive" height="100" width="100"  id="displayed"/></li>
                 <li>Patient ID : {{patient_id}} <li>
                 <li>Name : {{p.p_name}} </li>
                 <li>Age : {{p.p_age}} </li>
